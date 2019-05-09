@@ -11,49 +11,49 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Subscriptions;
 import com.iberifest.modelo.User;
-import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
- *
  * @author adolfo
  */
 
 @Named
 @ViewScoped
-public class AltaSubscriptionController implements Serializable{
-    
+public class AltaSubscriptionController implements Serializable {
+
     @EJB
     private SubscriptionsFacadeLocal subscriptionsEJB;
-    
+
     @EJB
     private EventFacadeLocal eventEJB;
-    
+
     @EJB
     private UserFacadeLocal userEJB;
-    
+
     private Subscriptions subscription;
     private Event event;
     private User user;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         subscription = new Subscriptions();
         event = new Event();
         user = new User();
     }
-    
-    public void createSubscription(){
-        
+
+    public void createSubscription() {
+
         try {
-            
+
             subscriptionsEJB.create(subscription);
-            
+
         } catch (Exception e) {
-            
+
             System.out.println("Error al crear subscricion");
         }
     }
@@ -81,7 +81,6 @@ public class AltaSubscriptionController implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
-    
-    
-    
+
+
 }

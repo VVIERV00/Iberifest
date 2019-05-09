@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class User_role implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GeneratedValue.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Id

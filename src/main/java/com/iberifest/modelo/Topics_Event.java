@@ -5,31 +5,24 @@
  */
 package com.iberifest.modelo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
- *
  * @author adolfo
  */
 
 @Entity
 @Table(name = "topics_event")
-public class Topics_Event implements Serializable{
-    
+public class Topics_Event implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "id_event")
     @ManyToOne
     private Event id_event;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "id_topic")
@@ -77,7 +70,6 @@ public class Topics_Event implements Serializable{
         }
         return true;
     }
-    
-    
-    
+
+
 }

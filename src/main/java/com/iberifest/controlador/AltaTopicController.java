@@ -7,35 +7,35 @@ package com.iberifest.controlador;
 
 import com.iberifest.EJB.TopicFacadeLocal;
 import com.iberifest.modelo.Topic;
-import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
- *
  * @author adolfo
  */
 @Named
 @ViewScoped
-public class AltaTopicController implements Serializable{
-    
+public class AltaTopicController implements Serializable {
+
     @EJB
     private TopicFacadeLocal topicEJB;
-    
+
     private Topic topic;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         topic = new Topic();
     }
-    
+
     public void createTopic() {
         try {
             topicEJB.create(topic);
         } catch (Exception e) {
-            
+
             System.out.println("Error al crear topic");
         }
     }
@@ -47,9 +47,6 @@ public class AltaTopicController implements Serializable{
     public void setTopic(Topic topic) {
         this.topic = topic;
     }
-    
-    
-    
-    
-    
+
+
 }

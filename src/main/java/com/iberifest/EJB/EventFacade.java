@@ -6,12 +6,12 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.Event;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
  * @author adolfo
  */
 @Stateless
@@ -27,5 +27,5 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
     public EventFacade() {
         super(Event.class);
     }
-    
+
 }

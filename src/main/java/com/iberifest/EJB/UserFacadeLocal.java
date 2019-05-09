@@ -11,7 +11,6 @@ import javax.ejb.Local;
 import java.util.List;
 
 /**
- *
  * @author adolfo
  */
 @Local
