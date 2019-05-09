@@ -5,57 +5,47 @@
  */
 package com.iberifest.modelo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
- *
  * @author adolfo
  */
 
 @Entity
 @Table(name = "event")
-public class Event implements Serializable{
-    
+public class Event implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_event;
-    
-    
+
+
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "location")
     private String location;
-    
+
     @Column(name = "coordinates")
     private String coordinates;
-    
+
     @Column(name = "date_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_start;
-    
+
     @Column(name = "end_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date end_start;
-    
+
     @Column(name = "creation_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creation_date;
-    
+
     @JoinColumn(name = "user_iduser")
     @ManyToOne
     private User user_iduser;
@@ -154,7 +144,6 @@ public class Event implements Serializable{
         }
         return true;
     }
-    
-    
-    
+
+
 }

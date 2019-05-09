@@ -14,7 +14,6 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- *
  * @author adolfo
  */
 @Stateless
@@ -66,5 +65,5 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
         return user;
     }
-    
+
 }

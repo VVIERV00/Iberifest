@@ -6,11 +6,11 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.Subscriptions;
-import java.util.List;
+
 import javax.ejb.Local;
+import java.util.List;
 
 /**
- *
  * @author adolfo
  */
 @Local
@@ -29,5 +29,5 @@ public interface SubscriptionsFacadeLocal {
     List<Subscriptions> findRange(int[] range);
 
     int count();
-    
+
 }

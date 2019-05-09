@@ -6,12 +6,12 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.Subscriptions;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
  * @author adolfo
  */
 @Stateless
@@ -27,5 +27,5 @@ public class SubscriptionsFacade extends AbstractFacade<Subscriptions> implement
     public SubscriptionsFacade() {
         super(Subscriptions.class);
     }
-    
+
 }

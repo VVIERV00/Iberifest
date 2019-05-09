@@ -6,11 +6,11 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.Topics_Event;
-import java.util.List;
+
 import javax.ejb.Local;
+import java.util.List;
 
 /**
- *
  * @author adolfo
  */
 @Local
@@ -29,5 +29,5 @@ public interface Topics_EventFacadeLocal {
     List<Topics_Event> findRange(int[] range);
 
     int count();
-    
+
 }
