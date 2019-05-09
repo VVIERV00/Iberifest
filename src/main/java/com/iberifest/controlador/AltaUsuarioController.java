@@ -13,7 +13,9 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author adolfo
@@ -27,9 +29,11 @@ public class AltaUsuarioController implements Serializable {
 
     private User user;
 
+
     @PostConstruct
     public void init() {
         user = new User();
+  
     }
 
     public void createUser() {
@@ -52,5 +56,6 @@ public class AltaUsuarioController implements Serializable {
         this.user = user;
     }
 
+    
 
 }

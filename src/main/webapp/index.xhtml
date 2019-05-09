@@ -10,24 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <h:body id="principal">
-    <div>
-        <h:form>
-            <p:panelGrid columns="2">
-                <p:outputLabel value="usuario"></p:outputLabel>
-                <p:inputText value="#{indexController.user.username}"></p:inputText>
-
-                <p:outputLabel value="contrasena"></p:outputLabel>
-                <p:inputText value="#{indexController.user.password}"></p:inputText>
-
-                <p:column></p:column>
-                <p:commandButton value="acceder" action="#{indexController.checkUser()}"/>
-            </p:panelGrid>
-
-            <p>
-                <h:link outcome="/public/administrador/altaUsuario" value="Alta Usuario"/>
-            </p>
-        </h:form>
-    </div>
+    
+    <h:form> 
+   <h3> Using Managed Bean</h3>  
+    <h:commandButton action = "#{indexController.moveToAdmin()}" value = "Admin"></h:commandButton>
+    </h:form> 
 
 </h:body>
 </html>
