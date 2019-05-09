@@ -47,6 +47,7 @@ public class AltaUsuarioController implements Serializable {
         }
 
     }
+    
 
     public User getUser() {
         return user;

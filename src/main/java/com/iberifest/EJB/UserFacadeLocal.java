@@ -33,4 +33,6 @@ public interface UserFacadeLocal {
     boolean userExist(String nombreUsuario);
 
     User getUser(User usuario);
+    
+    User getUserByUsername(User usuario);
 }

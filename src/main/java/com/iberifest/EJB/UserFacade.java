@@ -6,12 +6,17 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.User;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author adolfo
@@ -64,6 +69,43 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             System.out.println("Error al obteenr el modelo");
         }
         return user;
+    }
+    
+    @Override
+    public User getUserByUsername(User usuario)
+    {
+        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        User user = new User();
+        //System.out.println("HOLA"+format.format(usuario.getBirthday()));
+        
+     
+        //SELECT * FROM Customers WHERE CustomerName LIKE 'Antonio Moreno Taquería%';
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+            //String dateString = usuario.getBirthday().toString();          
+            
+            //Date date1=new SimpleDateFormat("yyyy/MM/dd").parse(sDate1);
+
+            //Date date = formatter.parse(dateString);
+           // System.out.println(date);
+            String consulta = "FROM User u WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, usuario.getUsername() + "%");
+            query.setParameter(2, usuario.getEmail() + "%");        
+            query.setParameter(3, usuario.getBirthday());        
+            
+            
+            user = (User) query.getSingleResult();
+            
+            
+        } catch (Exception e) {
+            System.out.print(e);
+            System.out.println("Error al obtener el modelo en getUserByUsername");
+            return new User();
+        }
+        System.out.print(user);
+        return user;
+        
     }
 
 }
