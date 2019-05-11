@@ -6,21 +6,17 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.User;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
+ *
  * @author adolfo
  */
 @Stateless
@@ -36,7 +32,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public UserFacade() {
         super(User.class);
     }
-
+    
     @Override
     public boolean userExist(String nombreUsuario) {
         boolean existe = false;
@@ -155,6 +151,6 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         //System.out.print(user);
         return listaUsuarios;
         
-    }
-
+    }    
+    
 }

@@ -6,11 +6,11 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.User;
-
-import javax.ejb.Local;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
+ *
  * @author adolfo
  */
 @Local
@@ -29,10 +29,13 @@ public interface UserFacadeLocal {
     List<User> findRange(int[] range);
 
     int count();
-
+    
     boolean userExist(String nombreUsuario);
-
+    
     User getUser(User usuario);
     
     List<User> getUserByUsername(User usuario);
+    
+    
+    
 }
