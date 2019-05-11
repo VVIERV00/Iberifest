@@ -5,12 +5,17 @@
 */
 package com.iberifest.controlador;
 
+import com.iberifest.EJB.RoleFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
+import com.iberifest.EJB.User_roleFacadeLocal;
+import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
+import com.iberifest.modelo.User_role;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,26 +32,34 @@ import org.primefaces.event.ToggleEvent;
  */
 @Named
 @ViewScoped
-public class adminController implements Serializable{
+public class AdminController implements Serializable{
     
-    private String printOnXhtml;
     
     
     @EJB
     private UserFacadeLocal userEJB;
     
-    private User user;
+    @EJB
+    private User_roleFacadeLocal userRoleEJB;
     
-    List<String> listaUsuarios;
+    @EJB
+    private RoleFacadeLocal roleEJB;
+    
+    private User user;
+    private User_role userRole;
+    
+    private List<User> listaUsuarios;
+    private String printOnXhtml;
+    // Create a HashMap object called capitalCities
+    HashMap<Integer, List<User_role>> rolesPorUsuario;
+    
     @PostConstruct
     public void init() {
         printOnXhtml = "";
         user = new User();
+        userRole = new User_role();
         listaUsuarios = new ArrayList<>();
-        
-        for (User u : userEJB.findAll()) {
-            listaUsuarios.add(u.getUsername());
-        }
+        rolesPorUsuario = new HashMap<Integer, List<User_role>>();
         
     }
     
@@ -54,7 +67,10 @@ public class adminController implements Serializable{
     {
         
         //System.out.println(user.getBirthday());
-        List<User> listaUsuarios = userEJB.getUserByUsername(user);
+        listaUsuarios = userEJB.getUserByUsername(user);
+        List<User_role> listaUserRoles;
+        Role role;
+        
         printOnXhtml = "";
         for(User u : listaUsuarios)
         {
@@ -62,8 +78,14 @@ public class adminController implements Serializable{
             //System.out.println(user.getUsername());
             printOnXhtml += u.getUsername();
 
+            listaUserRoles = userRoleEJB.findByUserId(u);
             
-
+           
+            
+            rolesPorUsuario.put(u.getId_user(), listaUserRoles);
+            
+            //role = rolesPorUsuario.get(u.getId_user()).get(0).getRole();
+            
             user = new User();//Para resetear los campos de filtrado            
             
         }
@@ -74,6 +96,8 @@ public class adminController implements Serializable{
     public void changeRoleOfUser()
     {
         
+        
+        
     }
     public User getUser() {
         return user;
@@ -83,11 +107,11 @@ public class adminController implements Serializable{
         this.user = user;
     }
     
-    public List<String> getListaUsuarios() {
+    public List<User> getListaUsuarios() {
         return listaUsuarios;
     }
     
-    public void setListaUsuarios(List<String> listaUsuarios) {
+    public void setListaUsuarios(List<User> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
     
@@ -97,6 +121,14 @@ public class adminController implements Serializable{
     
     public void setPrintOnXhtml(String printOnXhtml) {
         this.printOnXhtml = printOnXhtml;
+    }
+
+    public User_role getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(User_role userRole) {
+        this.userRole = userRole;
     }
     
     

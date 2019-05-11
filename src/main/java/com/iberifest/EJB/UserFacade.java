@@ -151,6 +151,6 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         //System.out.print(user);
         return listaUsuarios;
         
-    }    
+    }
     
 }

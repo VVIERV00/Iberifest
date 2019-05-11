@@ -4,12 +4,9 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.User;
 
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 
 @Named
