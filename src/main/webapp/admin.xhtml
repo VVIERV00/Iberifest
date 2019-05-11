@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Panel de Administración</title>
     </h:head>
@@ -57,12 +58,13 @@ PrimeFaces.locales['es'] = {
 
                         
 		</h:panelGrid>
-                <p:calendar id="button" value="#{adminController.user.birthday}" showOn="button" locale="es" />                 
+                <p:calendar id="birthday" placeholder="BirthDay" value="#{adminController.user.birthday}" showOn="button" locale="es" />                 
+                <p:calendar id="register_date" placeholder="RegisterDate" value="#{adminController.user.register_date}" showOn="button" locale="es" />                 
                 
 	</h:form>        
         <h:outputText value="#{adminController.printOnXhtml}" id="outputText"/>
         
-        
+  
                
 
     </h:body>

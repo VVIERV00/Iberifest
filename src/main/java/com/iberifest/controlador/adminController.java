@@ -14,8 +14,12 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.CloseEvent;
+import org.primefaces.event.ToggleEvent;
 
 /**
  *
@@ -50,23 +54,27 @@ public class adminController implements Serializable{
     {
         
         //System.out.println(user.getBirthday());
-        
-        user = userEJB.getUserByUsername(user);
-        
-        if(userEJB.getUserByUsername(user).getUsername() != null)
+        List<User> listaUsuarios = userEJB.getUserByUsername(user);
+        printOnXhtml = "";
+        for(User u : listaUsuarios)
         {
-            System.out.println(user.getUsername());
-            printOnXhtml = user.getUsername();
 
-        }else{
-            printOnXhtml = "No se han encontrado resultados";
+            //System.out.println(user.getUsername());
+            printOnXhtml += u.getUsername();
+
+            
+
+            user = new User();//Para resetear los campos de filtrado            
             
         }
- 
-        user = new User();//Para resetear los campos de filtrado
+        
+
     }
     
-    
+    public void changeRoleOfUser()
+    {
+        
+    }
     public User getUser() {
         return user;
     }

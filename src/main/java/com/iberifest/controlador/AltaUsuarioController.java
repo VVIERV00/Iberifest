@@ -38,7 +38,7 @@ public class AltaUsuarioController implements Serializable {
 
     public void createUser() {
         try {
-            user.setBirthday(new Date(1997, 12, 7)); //Cambiar por calendario en la vista
+            //user.setBirthday(new Date(1997, 12, 7)); //Cambiar por calendario en la vista
             user.setRegister_date(new Date()); //se harcodea 
             userEJB.create(user);
 
