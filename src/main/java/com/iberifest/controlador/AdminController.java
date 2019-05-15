@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -83,8 +85,30 @@ public class AdminController implements Serializable{
            
             
             rolesPorUsuario.put(u.getId_user(), listaUserRoles);
+            //Set<Integer> keys;
+            //keys = rolesPorUsuario.keySet();
+            String roleName = "";
+            for (Map.Entry<Integer, List<User_role>> entries : rolesPorUsuario.entrySet()) {
+                if (entries.getKey() == u.getId_user()) {
+                    
+                    System.out.println("ENTRA");
+                    //System.out.println(entries.getKey() + " ---> " +entries.getValue() );
+                    for(int i = 0; i < entries.getValue().size(); i++)
+                    {
+                        roleName = entries.getValue().get(i).getRole().getName();
+                        
+                        //System.out.println(entries.getKey() + " ---> " +entries.getValue().get(i));
+                        //rolUser.add(roleName);
+                    }
+                }
+                        
+
+            }            
+
+            //role = rolesPorUsuario.get(u.getId_user()).get(i).getRole();
             
-            //role = rolesPorUsuario.get(u.getId_user()).get(0).getRole();
+
+            
             
             user = new User();//Para resetear los campos de filtrado            
             
@@ -130,8 +154,16 @@ public class AdminController implements Serializable{
     public void setUserRole(User_role userRole) {
         this.userRole = userRole;
     }
-    
-    
+
+    public HashMap<Integer, List<User_role>> getRolesPorUsuario() {
+        return rolesPorUsuario;
+    }
+
+    public void setRolesPorUsuario(HashMap<Integer, List<User_role>> rolesPorUsuario) {
+        this.rolesPorUsuario = rolesPorUsuario;
+    }
+
+ 
     
     
 }
