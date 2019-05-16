@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Panel de Administración</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"></link>        
     </h:head>
     <h:body>
 
@@ -37,6 +38,16 @@ PrimeFaces.locales['es'] = {
 	    day: 'Día',
 	    allDayText : 'Todo el día'
 };
+
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
 </script>
  
 <style type="text/css">
@@ -62,25 +73,48 @@ PrimeFaces.locales['es'] = {
                 <p:calendar id="birthday" placeholder="BirthDay" value="#{adminController.user.birthday}" showOn="button" locale="es" />                 
                 <p:calendar id="register_date" placeholder="RegisterDate" value="#{adminController.user.register_date}" showOn="button" locale="es" />                 
         </h:form>
-        
-        <p:dataTable var="usuarios" value="#{adminController.listaUsuarios}">
-            <p:column headerText="Id">
-                <h:outputText value="#{usuarios.id_user}" />
-            </p:column>
+        <h:form>
 
-            <p:column headerText="Name">
-                <h:outputText value="#{usuarios.name}" />
-            </p:column>
-            <p:column headerText="Email">
-                <h:outputText value="#{usuarios.email}" />
-            </p:column>
-            <!--<p:column headerText="Roles">
-                <ui:repeat var="rol" value="#{adminController.rolUser}">
-                    <h:outputText value="#{rol}" />
-                    <br></br>
-                </ui:repeat>
-            </p:column>-->               
-        </p:dataTable>        
+            <p:dataTable id="tablaUsuarios" var="usuarios" value="#{adminController.listaUsuarios}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{usuarios.id_user}" />
+                </p:column>
+
+                <p:column headerText="Name">
+                    <h:outputText value="#{usuarios.name}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{usuarios.email}" />
+                </p:column>
+                <p:column headerText="Roles">
+                    <ui:repeat var="rol" value="#{adminController.getRolOfUser(usuarios)}">
+                        <h:outputText value="#{rol.role.name}" />
+                        <br></br>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Operaciones">
+                    <p:commandButton update="tablaUsuarios" value="Eliminar Usuario" id="eliminarUsuario" action="#{adminController.deleteUser(usuarios)}"/>                
+                    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+                             <i class="far fa-edit"></i>
+                     </h:outputLink>
+                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+                    <p:dialog header="Editar Roles" widgetVar="dlg" resizable="false">
+                       
+                        <p:selectManyCheckbox id="grid" value="#{adminController.listaUserRoles}" layout="grid" columns="3">
+                            <f:selectItems value="#{adminController.getRolOfUser(usuarios)}" var="rol" itemLabel="#{rol.role.name}" itemValue="#{rol.role.id}" />
+                        </p:selectManyCheckbox>            
+              <!--https://stackoverflow.com/questions/6650327/preselect-items-in-hselectmanycheckbox-->
+                    </p:dialog>                        
+                </p:column>            
+            </p:dataTable>        
+        </h:form>
+
+        <h:form>        
+            
+ 
+
+        </h:form>
 
 
 
