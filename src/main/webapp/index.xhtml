@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
+
 <head>
     <title>TODO supply a title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,18 +15,17 @@
         <h:form>
             <p:panelGrid columns="2">
                 <p:outputLabel value="usuario"></p:outputLabel>
-                <p:inputText value="#{indexController.user.username}"></p:inputText>
 
                 <p:outputLabel value="contrasena"></p:outputLabel>
-                <p:inputText value="#{indexController.user.password}"></p:inputText>
 
                 <p:column></p:column>
-                <p:commandButton value="acceder" action="#{indexController.checkUser()}"/>
+
+                <p>
+                    <h:link outcome="public/register" value="Registrarse"/>
+                </p>
+
             </p:panelGrid>
 
-            <p>
-                <h:link outcome="/public/administrador/altaUsuario" value="Alta Usuario"/>
-            </p>
         </h:form>
     </div>
 

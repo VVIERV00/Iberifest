@@ -35,7 +35,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         boolean existe = false;
         List<User> listaUsuarios;
         try {
-            String consulta = "FROM Usuarios u WHERE u.user=?1";//no u.user=nombreUsuario
+            String consulta = "FROM user u WHERE u.username=?1";//no u.user=nombreUsuario
             Query query = em.createQuery(consulta);
             query.setParameter(1, nombreUsuario);
             listaUsuarios = query.getResultList();
@@ -51,9 +51,9 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         User user = null;
         List<User> listaUsuarios;
         try {
-            String consulta = "FROM User u WHERE u.user = ?1 AND u.password = ?2";
+            String consulta = "FROM user u WHERE u.username = ?1 AND u.password = ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, user.getUsername());
+            query.setParameter(1, usuario.getUsername());
             query.setParameter(2, usuario.getPassword());
             listaUsuarios = query.getResultList();
             if (!listaUsuarios.isEmpty()) {

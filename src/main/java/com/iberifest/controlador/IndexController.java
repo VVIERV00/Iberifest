@@ -1,12 +1,8 @@
 package com.iberifest.controlador;
 
-import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.User;
 
-import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -14,13 +10,13 @@ import java.io.Serializable;
 @ViewScoped
 public class IndexController implements Serializable {
 
-    @Inject
-    private User user;
 
+    private User user;
+/*
     @EJB
     private UserFacadeLocal userFacade;
 
-    public String checkUser() {
+    /*public String checkUser() {
         String direccion = "";
         try {
             user = userFacade.getUser(user);
@@ -39,7 +35,7 @@ public class IndexController implements Serializable {
             System.out.println("Error al comprobar");
         }
         return direccion;
-    }
+    }*/
 
     public User getUser() {
         return user;
