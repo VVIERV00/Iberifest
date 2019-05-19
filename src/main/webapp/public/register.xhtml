@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+    <title>Registro en la plataforma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</h:head>
+<h:body>
+
+    <style type="text/css">
+        .label {
+            width: 20%;
+            padding: 4px;
+        }
+
+        .value {
+            width: 80%;
+            padding: 4px;
+        }
+
+        .grid {
+            width: 100%;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .outputLabel {
+            font-weight: bold;
+        }
+
+        .grid {
+            width: 33%;
+            padding: 4px;
+        }
+    </style>
+
+
+    <h:form>
+
+        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+        <p:tab id="personal" title="Personal">
+            <p:panel header="Datos personales">
+                <p:messages id="msgPrincipal" severity="info, fatal" showDetail="true" showSummary="true"/>
+
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText id="name" value="Nombre: "/>
+                    <p:inputText value="#{registerController.user.name}" required="true" label="Lastname"/>
+
+                    <h:outputText id="nick" value="Nick: "/>
+                    <p:inputText value="#{registerController.user.username}" required="true"
+                                 requiredMessage="Tienes que elegir un nick" label="Firstname"/>
+                    <p:message for="nick"/>
+
+                    <h:outputText id="email" value="Email: "/>
+                    <p:inputText value="#{registerController.user.email}" required="true"
+                                 requiredMessage="Necesitas indicarnos un email" label="Email"/>
+                    <p:message for="email"/>
+
+                    <h:outputText id="birthday" value="Fecha de nacimiento: "/>
+                    <p:datePicker value="#{registerController.user.birthday}"
+                                  requiredMessage="Fecha de nacimiento necesaria" pattern="yyyy-MM-dd" required="true"
+                                  label="Email"/>
+                    <p:message for="birthday"/>
+
+                    <h:outputText id="passW" value="Contraseña: "/>
+                    <p:password id="pass" required="true" label="password" requiredMessage="Introduce tu contraseña"
+                                feedback="true"/>
+                    <h:outputText value="Repita contraseña: "/>
+                    <p:password id="pass2" value="#{registerController.user.password}" match="pass"
+                                requiredMessage="Vuelve a introducir tu contraseña" required="true" label="Password"
+                                feedback="true"/>
+                    <p:message for="passW"/>
+
+                    <h:outputText id="tlfn" value="Teléfono: "/>
+                    <p:inputMask mask="999-99-99-99" value="#{registerController.user.phone}"/>
+                    <p:message for="tlfn"/>
+
+                </h:panelGrid>
+                <p:commandButton value="Registro" action="#{registerController.save}" update="growl" process="@this"/>
+
+            </p:panel>
+        </p:tab>
+
+    </h:form>
+
+
+</h:body>
+</html>

@@ -37,11 +37,11 @@ public class User implements Serializable {
     private String phone;
 
     @Column(name = "register_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date register_date;
 
     @Column(name = "birthday")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date birthday;
 
     public int getId_user() {
@@ -124,10 +124,7 @@ public class User implements Serializable {
             return false;
         }
         final User other = (User) obj;
-        if (this.id_user != other.id_user) {
-            return false;
-        }
-        return true;
+        return this.id_user == other.id_user;
     }
 
 
