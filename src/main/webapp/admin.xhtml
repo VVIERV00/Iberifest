@@ -48,6 +48,8 @@ PrimeFaces.locales['es'] = {
             $('#loginLink').fadeOut();
         }
     }
+    
+    
 </script>
  
 <style type="text/css">
@@ -101,13 +103,14 @@ PrimeFaces.locales['es'] = {
 
                     <p:dialog header="Editar Roles" widgetVar="dlg" resizable="false">
                        
-                        <p:selectManyCheckbox id="grid" value="#{adminController.listaUserRoles}" layout="grid" columns="3">
-                            <f:selectItems value="#{adminController.getRolOfUser(usuarios)}" var="rol" itemLabel="#{rol.role.name}" itemValue="#{rol.role.id}" />
-                        </p:selectManyCheckbox>            
-              <!--https://stackoverflow.com/questions/6650327/preselect-items-in-hselectmanycheckbox-->
+                        <p:selectManyCheckbox id="grid" value="#{adminController.selectedRoles}" layout="grid" columns="3">
+                            <f:selectItems value="#{adminController.allRoles}" var="rol" itemLabel="#{rol.name}" itemValue="#{rol}" />
+                        </p:selectManyCheckbox>          
+                        <p:commandButton value="Modificar Roles" update="tablaUsuarios" id="modificarRoles" oncomplete="PF('dlg').show()" action="#{adminController.changeRoleOfUser(usuarios)}" />
                     </p:dialog>                        
                 </p:column>            
             </p:dataTable>        
+                    
         </h:form>
 
         <h:form>        

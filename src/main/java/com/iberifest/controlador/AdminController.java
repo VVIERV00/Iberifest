@@ -50,18 +50,23 @@ public class AdminController implements Serializable {
 
     private List<User> listaUsuarios;
     private String printOnXhtml;
+    private List<Role> allRoles;
     // Create a HashMap object called capitalCities
     HashMap<Integer, List<User_role>> rolesPorUsuario;
     List<User_role> listaUserRoles;
+
+    List<Role> selectedRoles;
 
     @PostConstruct
     public void init() {
         printOnXhtml = "";
         user = new User();
         userRole = new User_role();
+        allRoles = roleEJB.findAll();
         listaUsuarios = new ArrayList<>();
         rolesPorUsuario = new HashMap<Integer, List<User_role>>();
         listaUserRoles = new ArrayList<>();
+        selectedRoles = new ArrayList<>();
 
     }
 
@@ -71,23 +76,19 @@ public class AdminController implements Serializable {
         listaUsuarios = userEJB.getUserByUsername(user);
         //listaUserRoles = new ArrayList<>();
 
-        
         user = new User();//Para resetear los campos de filtrado            
 
-
     }
-    
-    public void getAllUsers()
-    {
+
+    public void getAllUsers() {
         listaUsuarios = userEJB.findAll();
     }
-    
-    public void deleteUser(User u)
-    {
+
+    public void deleteUser(User u) {
         userEJB.remove(u);
         //user = new User();
         getAllUsers();
-        
+
     }
 
     public List<User_role> getRolOfUser(User u) {
@@ -95,21 +96,52 @@ public class AdminController implements Serializable {
         listaUserRoles = userRoleEJB.findByUserId(u);
 
         for (int i = 0; i < listaUserRoles.size(); i++) {
+
             System.out.println(listaUserRoles.get(i).getRole().getName());
+            selectedRoles.add(listaUserRoles.get(i).getRole());
         }
 
         return listaUserRoles;
 
     }
     
-    public void getAllRoles()
+    public void changeRoleOfUser(User u)
     {
+        
+        System.out.println(selectedRoles);
+        for(int i = 0; i < selectedRoles.size(); i++)
+        {
+            Role role = selectedRoles.get(i);
+            System.out.println("AAAAAAaa"+role.getName());
+            //userRole.setUser(u);
+            //userRole.setRole(selectedRoles.get(i));
+            //userRoleEJB.edit(userRole);
+
+        }
+        /*for(Role r: selectedRoles){
+            userRole.setUser(u);
+            userRole.setRole(r);
+            userRoleEJB.edit(userRole);
+        }*/
         
     }
 
-    public void changeRoleOfUser() {
-
+    public List<Role> getSelectedRoles() {
+        return selectedRoles;
     }
+
+    public void setSelectedRoles(List<Role> selectedRoles) {
+        this.selectedRoles = selectedRoles;
+    }
+
+    public List<Role> getAllRoles() {
+        return allRoles;
+    }
+
+    public void setAllRoles(List<Role> allRoles) {
+        this.allRoles = allRoles;
+    }
+
 
     public User getUser() {
         return user;
@@ -159,5 +191,4 @@ public class AdminController implements Serializable {
         this.listaUserRoles = listaUserRoles;
     }
 
-    
 }
