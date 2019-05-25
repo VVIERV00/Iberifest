@@ -5,6 +5,7 @@
  */
 package com.iberifest.EJB;
 
+import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
 import java.util.ArrayList;
@@ -54,4 +55,31 @@ public class User_roleFacade extends AbstractFacade<User_role> implements User_r
         return listaUsuarios_rol;
     }
     
+    @Override
+    public User_role findByUserAndRole(User usuario, Role role){
+        
+        List<User_role> listaRoles = new ArrayList<>();
+        User_role userRole = new User_role();
+        
+        try {
+            String consulta = "FROM User_role u WHERE u.user = ?1 AND u.role = ?2";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, usuario);
+            query.setParameter(2, role);
+            listaRoles = query.getResultList();
+            if (!listaRoles.isEmpty()) {
+                System.out.println("encontre algo en FIND USER ROLE");
+                userRole = listaRoles.get(0);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al obteenr el modelo");
+            System.err.println(e);
+        }        
+        
+        
+        
+        return userRole;
+        
+        
+    }    
 }

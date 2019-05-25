@@ -16,11 +16,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -55,7 +57,8 @@ public class AdminController implements Serializable {
     HashMap<Integer, List<User_role>> rolesPorUsuario;
     List<User_role> listaUserRoles;
 
-    List<Role> selectedRoles;
+    Set<String> selectedRolesSet;
+    Set<String> selectedRolesSetNew;
 
     @PostConstruct
     public void init() {
@@ -66,7 +69,9 @@ public class AdminController implements Serializable {
         listaUsuarios = new ArrayList<>();
         rolesPorUsuario = new HashMap<Integer, List<User_role>>();
         listaUserRoles = new ArrayList<>();
-        selectedRoles = new ArrayList<>();
+
+        selectedRolesSet = new HashSet<>();
+        selectedRolesSetNew = new HashSet<>();
 
     }
 
@@ -97,41 +102,81 @@ public class AdminController implements Serializable {
 
         for (int i = 0; i < listaUserRoles.size(); i++) {
 
-            System.out.println(listaUserRoles.get(i).getRole().getName());
-            selectedRoles.add(listaUserRoles.get(i).getRole());
+            // System.out.println(listaUserRoles.get(i).getRole().getName());
+            selectedRolesSet.add(listaUserRoles.get(i).getRole().getName());
+            selectedRolesSetNew.add(listaUserRoles.get(i).getRole().getName());
         }
 
         return listaUserRoles;
 
     }
-    
-    public void changeRoleOfUser(User u)
-    {
-        
-        System.out.println(selectedRoles);
-        for(int i = 0; i < selectedRoles.size(); i++)
-        {
-            Role role = selectedRoles.get(i);
-            System.out.println("AAAAAAaa"+role.getName());
-            //userRole.setUser(u);
-            //userRole.setRole(selectedRoles.get(i));
-            //userRoleEJB.edit(userRole);
 
+    public void changeRoleOfUser(User u) {
+
+        System.out.println("OLD" + selectedRolesSet);
+        System.out.println("NEW" + selectedRolesSetNew);
+
+        if (selectedRolesSetNew.size() >= selectedRolesSet.size()) {
+            selectedRolesSetNew.removeAll(selectedRolesSet);
+            if (!selectedRolesSetNew.isEmpty())//AÑADIR
+            {
+                System.out.println("AÑADIR" + selectedRolesSetNew);
+                for (String r : selectedRolesSetNew) {
+
+                    for (Role role : allRoles) {
+                        if (role.getName().equals(r)) {
+                            userRole.setUser(u);
+                            userRole.setRole(role);
+                            userRoleEJB.create(userRole);
+
+                        }
+                    }
+                }
+            } else {
+                System.out.println("HACER NADA");
+            }
+
+        } else {
+
+            selectedRolesSet.removeAll(selectedRolesSetNew);
+            if (!selectedRolesSet.isEmpty())//BORRAR
+            {
+                System.out.println("BORRAR: " + selectedRolesSet);
+                for(String r: selectedRolesSet)
+                {
+                    for (Role role : allRoles) {
+                        if (role.getName().equals(r)) {
+                            
+                            userRole = userRoleEJB.findByUserAndRole(u, role);
+                            userRoleEJB.remove(userRole);
+
+                        }
+                    }                    
+                    
+                }
+            } else {
+                System.out.println("HACER NADA");
+            }
         }
-        /*for(Role r: selectedRoles){
-            userRole.setUser(u);
-            userRole.setRole(r);
-            userRoleEJB.edit(userRole);
-        }*/
-        
+
+        selectedRolesSet = new HashSet<>();
+        selectedRolesSetNew = new HashSet<>();
     }
 
-    public List<Role> getSelectedRoles() {
-        return selectedRoles;
+    public Set<String> getSelectedRolesSetNew() {
+        return selectedRolesSetNew;
     }
 
-    public void setSelectedRoles(List<Role> selectedRoles) {
-        this.selectedRoles = selectedRoles;
+    public void setSelectedRolesSetNew(Set<String> selectedRolesSetNew) {
+        this.selectedRolesSetNew = selectedRolesSetNew;
+    }
+
+    public Set<String> getSelectedRolesSet() {
+        return selectedRolesSet;
+    }
+
+    public void setSelectedRolesSet(Set<String> selectedRolesSet) {
+        this.selectedRolesSet = selectedRolesSet;
     }
 
     public List<Role> getAllRoles() {
@@ -141,7 +186,6 @@ public class AdminController implements Serializable {
     public void setAllRoles(List<Role> allRoles) {
         this.allRoles = allRoles;
     }
-
 
     public User getUser() {
         return user;

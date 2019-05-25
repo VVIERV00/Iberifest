@@ -99,25 +99,24 @@ PrimeFaces.locales['es'] = {
                     <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
                              <i class="far fa-edit"></i>
                      </h:outputLink>
-                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                    
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-                    <p:dialog header="Editar Roles" widgetVar="dlg" resizable="false">
-                       
-                        <p:selectManyCheckbox id="grid" value="#{adminController.selectedRoles}" layout="grid" columns="3">
-                            <f:selectItems value="#{adminController.allRoles}" var="rol" itemLabel="#{rol.name}" itemValue="#{rol}" />
-                        </p:selectManyCheckbox>          
-                        <p:commandButton value="Modificar Roles" update="tablaUsuarios" id="modificarRoles" oncomplete="PF('dlg').show()" action="#{adminController.changeRoleOfUser(usuarios)}" />
-                    </p:dialog>                        
+                        <p:dialog header="Editar Roles" widgetVar="dlg" resizable="false">
+                            <p:selectManyCheckbox id="grid" value="#{adminController.selectedRolesSetNew}" layout="grid" columns="3">
+                                <f:selectItems value="#{adminController.allRoles}" var="rol" itemLabel="#{rol.name}" itemValue="#{rol.name}" />
+                            </p:selectManyCheckbox>     
+                            <p:commandButton value="Modificar Roles" id="modificarRoles" action="#{adminController.changeRoleOfUser(usuarios)}" />
+                              
+
+                        </p:dialog>                        
+                    
                 </p:column>            
             </p:dataTable>        
                     
         </h:form>
 
-        <h:form>        
-            
- 
-
-        </h:form>
+      
 
 
 

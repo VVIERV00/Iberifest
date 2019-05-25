@@ -5,6 +5,7 @@
  */
 package com.iberifest.EJB;
 
+import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User_role;
 import com.iberifest.modelo.User;
 import java.util.List;
@@ -32,4 +33,6 @@ public interface User_roleFacadeLocal {
     int count();
     
     List<User_role> findByUserId(User usuario);
+    
+    User_role findByUserAndRole(User usuario, Role role);
 }
