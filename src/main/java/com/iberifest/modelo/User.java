@@ -37,11 +37,11 @@ public class User implements Serializable {
     private String phone;
 
     @Column(name = "register_date")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date register_date;
 
     @Column(name = "birthday")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     public int getId_user() {

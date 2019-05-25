@@ -11,6 +11,7 @@ import javax.ejb.Local;
 import java.util.List;
 
 /**
+ *
  * @author adolfo
  */
 @Local
@@ -30,7 +31,13 @@ public interface UserFacadeLocal {
 
     int count();
 
-    boolean userExist(String nombreUsuario);
+    boolean userExistEmail(User user);
+
+    boolean userExistNick(User user);
 
     User getUser(User usuario);
+
+    List<User> getUserByUsername(User usuario);
+
+
 }
