@@ -13,45 +13,45 @@ import javax.annotation.PostConstruct;
 @ViewScoped
 public class IndexController implements Serializable {
 
-
     @EJB
     private UserFacadeLocal userFacade;
-    
-    
+
     private User user;
-    
-    
+
     @PostConstruct
     public void init() {
         user = new User();
-  
+
     }
-    
+
     public String moveToAdmin() {
-      return "admin.xhtml";
-   }
+        return "admin.xhtml";
+    }
+
+    public String moveToEvent() {
+        return "event.xhtml";
+    }
 
     /*public String checkUser() {
-        String direccion = "";
-        try {
-            user = userFacade.getUser(user);
-            if (user == null) {
-                direccion = "publico/error.xhtml?autenticationFailure=true";
-                System.out.println("error euthenticacion");
-            } else {
-                if (true) //TODO comprobar si es admin o no
-                    direccion = "privado/admin.xhtml";
-                else
-                    direccion = "privado/iberifest.xhtml";
-                //guardo el usuario en la sesion
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
-            }
-        } catch (Exception e) {
-            System.out.println("Error al comprobar");
-        }
-        return direccion;
-    }*/
-
+     String direccion = "";
+     try {
+     user = userFacade.getUser(user);
+     if (user == null) {
+     direccion = "publico/error.xhtml?autenticationFailure=true";
+     System.out.println("error euthenticacion");
+     } else {
+     if (true) //TODO comprobar si es admin o no
+     direccion = "privado/admin.xhtml";
+     else
+     direccion = "privado/iberifest.xhtml";
+     //guardo el usuario en la sesion
+     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+     }
+     } catch (Exception e) {
+     System.out.println("Error al comprobar");
+     }
+     return direccion;
+     }*/
     public User getUser() {
         return user;
     }

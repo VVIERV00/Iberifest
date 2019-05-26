@@ -15,6 +15,8 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author adolfo
@@ -32,11 +34,20 @@ public class AltaEventController implements Serializable {
 
     private Event event;
     private User user;
+    private List<Event> listaEventos;
 
     @PostConstruct
     public void init() {
         event = new Event();
         user = new User();
+        listaEventos = new ArrayList<>();
+    }
+    
+    public void searchEventByFilter()
+    {
+        
+        listaEventos = eventEJB.getEventByName(event);
+        
     }
 
     public void createEvent() {
@@ -50,6 +61,15 @@ public class AltaEventController implements Serializable {
         }
     }
 
+    public List<Event> getListaEventos() {
+        return listaEventos;
+    }
+
+    public void setListaEventos(List<Event> listaEventos) {
+        this.listaEventos = listaEventos;
+    }
+
+    
 
     public Event getEvent() {
         return event;

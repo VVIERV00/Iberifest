@@ -29,5 +29,7 @@ public interface EventFacadeLocal {
     List<Event> findRange(int[] range);
 
     int count();
+    
+    List<Event> getEventByName(Event event);
 
 }
