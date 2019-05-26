@@ -4,76 +4,77 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Panel de Administración</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"></link>        
     </h:head>
     <h:body>
 
-<script type="text/javascript">    
-PrimeFaces.locales['es'] = {
-	    closeText: 'Cerrar',
-	    prevText: 'Anterior',
-	    nextText: 'Siguiente',
-	    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-	    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-	    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-	    dayNamesMin: ['D','L','M','X','J','V','S'],
-	    weekHeader: 'Semana',
-	    firstDay: 1,
-	    isRTL: false,
-	    showMonthAfterYear: false,
-	    yearSuffix: '',
-	    timeOnlyTitle: 'Sólo hora',
-	    timeText: 'Tiempo',
-	    hourText: 'Hora',
-	    minuteText: 'Minuto',
-	    secondText: 'Segundo',
-	    currentText: 'Fecha actual',
-	    ampm: false,
-	    month: 'Mes',
-	    week: 'Semana',
-	    day: 'Día',
-	    allDayText : 'Todo el día'
-};
+        <script type="text/javascript">
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día'
+            };
 
-    function handleLoginRequest(xhr, status, args) {
-        if(args.validationFailed || !args.loggedIn) {
-            PF('dlg').jq.effect("shake", {times:5}, 100);
-        }
-        else {
-            PF('dlg').hide();
-            $('#loginLink').fadeOut();
-        }
-    }
-    
-    
-</script>
- 
-<style type="text/css">
-    .value {
-        font-weight: bold;
-    }
-</style>        
-        
-        
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+
+
+        </script>
+
+        <style type="text/css">
+            .value {
+                font-weight: bold;
+            }
+        </style>        
+
+
         <h3 style="margin-top:0">Panel de Adminisitración</h3>
-        
-        
-        
-	<h:form>
-		<h3>Filtrado de usuarios</h3>
-		<h:panelGrid columns="4">
-                        <p:inputText placeholder="Username" value="#{adminController.user.username}" id="username"></p:inputText>
-                        <p:inputText placeholder="Email" value="#{adminController.user.email}" id="email"></p:inputText>
-                        <h:commandButton action="#{adminController.getByUserName()}" value="Submit"></h:commandButton>
 
-                        
-		</h:panelGrid>
-                <p:calendar id="birthday" placeholder="BirthDay" value="#{adminController.user.birthday}" showOn="button" locale="es" />                 
-                <p:calendar id="register_date" placeholder="RegisterDate" value="#{adminController.user.register_date}" showOn="button" locale="es" />                 
+
+
+        <h:form>
+            <h3>Filtrado de usuarios</h3>
+            <h:panelGrid columns="4">
+                <p:inputText placeholder="Username" value="#{adminController.user.username}" id="username"></p:inputText>
+                <p:inputText placeholder="Email" value="#{adminController.user.email}" id="email"></p:inputText>
+                <h:commandButton action="#{adminController.getByUserName()}" value="Submit"></h:commandButton>
+
+
+            </h:panelGrid>
+            <p:calendar id="birthday" placeholder="BirthDay" value="#{adminController.user.birthday}" showOn="button" locale="es" />                 
+            <p:calendar id="register_date" placeholder="RegisterDate" value="#{adminController.user.register_date}" showOn="button" locale="es" />                 
         </h:form>
         <h:form>
 
@@ -96,27 +97,22 @@ PrimeFaces.locales['es'] = {
                 </p:column>
                 <p:column headerText="Operaciones">
                     <p:commandButton update="tablaUsuarios" value="Eliminar Usuario" id="eliminarUsuario" action="#{adminController.deleteUser(usuarios)}"/>                
-                    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-                             <i class="far fa-edit"></i>
-                     </h:outputLink>
-                    
-                        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-                        <p:dialog header="Editar Roles" widgetVar="dlg" resizable="false">
-                            <p:selectManyCheckbox id="grid" value="#{adminController.selectedRolesSetNew}" layout="grid" columns="3">
-                                <f:selectItems value="#{adminController.allRoles}" var="rol" itemLabel="#{rol.name}" itemValue="#{rol.name}" />
-                            </p:selectManyCheckbox>     
-                            <p:commandButton value="Modificar Roles" id="modificarRoles" action="#{adminController.changeRoleOfUser(usuarios)}" />
-                              
-
-                        </p:dialog>                        
-                    
-                </p:column>            
+                </p:column>
+                <p:column headerText="Cambiar Roles" width="350">
+                    <ui:repeat var="map" value="#{adminController.auxChange(usuarios)}">
+                        <p:selectManyCheckbox id="grid" value="#{map[usuarios]}"  layout="grid" columns="3">
+                            <f:selectItems value="#{adminController.allRoles}" var="rol" itemLabel="#{rol.name}" itemValue="#{rol.name}" />
+                        </p:selectManyCheckbox>                           
+                        <br></br>
+                    </ui:repeat>
+                    <p:commandButton value="Modificar Roles" id="modificarRoles" action="#{adminController.changeRoleOfUser(usuarios)}" />
+                </p:column>
             </p:dataTable>        
-                    
+
         </h:form>
 
-      
+    
 
 
 
