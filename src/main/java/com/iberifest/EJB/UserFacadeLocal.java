@@ -37,6 +37,8 @@ public interface UserFacadeLocal {
     User getUser(User usuario);
 
     List<User> getUserByUsername(User usuario);
+    
+    User getByUserFullUserName(User usuario);
 
 
 }

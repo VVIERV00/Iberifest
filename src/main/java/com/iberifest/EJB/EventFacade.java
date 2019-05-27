@@ -7,6 +7,7 @@ package com.iberifest.EJB;
 
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
+import com.iberifest.EJB.UserFacade;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
     }
 
     @Override
-    public List<Event> getEventByName(Event event) {
+    public List<Event> getEventByName(Event event, User user) {
 
         Query query = null;
         String consulta;
@@ -44,10 +45,17 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
 
         try {
             //consulta = "FROM event e WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3 AND u.register_date BETWEEN ?4 AND ?5";
-            consulta = "FROM Event e WHERE e.name LIKE ?1";
-            query = em.createQuery(consulta);
-            query.setParameter(1, event.getName() + "%");
+            if (user != null) {
+                consulta = "FROM Event e WHERE e.name LIKE ?1 AND e.user_iduser.id_user LIKE ?2";
+                query = em.createQuery(consulta);
+                query.setParameter(1, event.getName() + "%");
+                query.setParameter(2, user.getId_user());
+            } else {
+                consulta = "FROM Event e WHERE e.name LIKE ?1";
+                query = em.createQuery(consulta);
+                query.setParameter(1, event.getName() + "%");
 
+            }
             listaEvents = query.getResultList();
 
             if (!listaEvents.isEmpty()) {

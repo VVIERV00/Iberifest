@@ -6,6 +6,7 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.Event;
+import com.iberifest.modelo.User;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -30,6 +31,6 @@ public interface EventFacadeLocal {
 
     int count();
     
-    List<Event> getEventByName(Event event);
+    List<Event> getEventByName(Event event, User user);
 
 }

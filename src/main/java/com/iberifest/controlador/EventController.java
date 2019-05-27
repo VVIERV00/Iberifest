@@ -18,6 +18,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -38,7 +40,10 @@ public class EventController implements Serializable {
 
     private Event event;
     private User user;
+
     private List<Event> listaEventos;
+    private List<User> listaUsuarios;
+
     private MapModel simpleModel;
     private LatLng coord;
     private HashMap<Integer, MapModel> hashMaps;
@@ -48,14 +53,32 @@ public class EventController implements Serializable {
         event = new Event();
         user = new User();
         listaEventos = new ArrayList<>();
+        listaUsuarios = new ArrayList<>();
         simpleModel = new DefaultMapModel();
         hashMaps = new HashMap<>();
 
     }
 
     public void searchEventByFilter() {
+        FacesMessage message = null;
+        System.out.println(user.getUsername());
+        if (!user.getUsername().equals("")) {
+            User userAux = userEJB.getByUserFullUserName(user);
 
-        listaEventos = eventEJB.getEventByName(event);
+            if (userAux != null) {
+
+                listaEventos = eventEJB.getEventByName(event, userAux);
+
+            } else {
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se ha encontrado dicho usuario: ", user.getUsername());
+                listaEventos = new ArrayList<>();
+            }
+
+        } else {
+            
+            listaEventos = eventEJB.getEventByName(event, null);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
         renderCoordinates();
 
     }
@@ -72,9 +95,9 @@ public class EventController implements Serializable {
 
             //Basic marker
             simpleModel = new DefaultMapModel();
-            
+
             simpleModel.addOverlay(new Marker(coord, "Localizacion"));
-            
+
             hashMaps.put(e.getId_event(), simpleModel);
         }
 
@@ -95,8 +118,6 @@ public class EventController implements Serializable {
     public void setHashMaps(HashMap<Integer, MapModel> hashMaps) {
         this.hashMaps = hashMaps;
     }
-    
-    
 
     public MapModel getSimpleModel() {
         return simpleModel;
