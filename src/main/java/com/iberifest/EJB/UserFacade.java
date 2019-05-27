@@ -6,6 +6,10 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.User;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import org.apache.log4j.Logger;
 
 import javax.ejb.Stateless;
@@ -37,7 +41,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public UserFacade() {
         super(User.class);
     }
-
+    
     @Override
     public boolean userExistEmail(User usuario) {
         List<User> listaUsuarios;
@@ -101,77 +105,80 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
         return user;
     }
-
+    
     @Override
-    public List<User> getUserByUsername(User usuario) {
-
+    public List<User> getUserByUsername(User usuario)
+    {
+        
 
         Query query = null;
         Date finRegister;
-        Calendar cal;
+        Calendar cal; 
         String consulta;
         List<User> listaUsuarios;
-
+        
         try {
 
-
-            if (usuario.getBirthday() != null && usuario.getRegister_date() != null) {
+ 
+                            
+            if(usuario.getBirthday() != null && usuario.getRegister_date() != null)
+            {
                 cal = Calendar.getInstance();
                 cal.setTime(usuario.getRegister_date()); // sets calendar time/date
                 cal.add(Calendar.HOUR_OF_DAY, 23);
                 cal.add(Calendar.MINUTE, 59);
                 cal.add(Calendar.SECOND, 59);
 
-                finRegister = cal.getTime();
-
+                finRegister = cal.getTime();                
+                
                 consulta = "FROM User u WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3 AND u.register_date BETWEEN ?4 AND ?5";
                 query = em.createQuery(consulta);
                 query.setParameter(1, usuario.getUsername() + "%");
-                query.setParameter(2, usuario.getEmail() + "%");
+                query.setParameter(2, usuario.getEmail() + "%");        
                 query.setParameter(3, usuario.getBirthday());
-                query.setParameter(4, usuario.getRegister_date());
-                query.setParameter(5, finRegister);
-
-            } else if (usuario.getBirthday() != null) {
+                query.setParameter(4, usuario.getRegister_date()); 
+                query.setParameter(5, finRegister); 
+                
+            }else if(usuario.getBirthday() != null){
                 consulta = "FROM User u WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3";
                 query = em.createQuery(consulta);
                 query.setParameter(1, usuario.getUsername() + "%");
-                query.setParameter(2, usuario.getEmail() + "%");
+                query.setParameter(2, usuario.getEmail() + "%");        
                 query.setParameter(3, usuario.getBirthday());
-
-            } else if (usuario.getRegister_date() != null) {
+                  
+            }else if(usuario.getRegister_date() != null){
                 cal = Calendar.getInstance();
                 cal.setTime(usuario.getRegister_date()); // sets calendar time/date
                 cal.add(Calendar.HOUR_OF_DAY, 23);
                 cal.add(Calendar.MINUTE, 59);
                 cal.add(Calendar.SECOND, 59);
 
-                finRegister = cal.getTime();
-
+                finRegister = cal.getTime();                
+                
                 consulta = "FROM User u WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.register_date BETWEEN ?3 AND ?4";
                 query = em.createQuery(consulta);
                 query.setParameter(1, usuario.getUsername() + "%");
-                query.setParameter(2, usuario.getEmail() + "%");
-                query.setParameter(3, usuario.getRegister_date());
-                query.setParameter(4, finRegister);
-
-            } else {
-
+                query.setParameter(2, usuario.getEmail() + "%");        
+                query.setParameter(3, usuario.getRegister_date()); 
+                query.setParameter(4, finRegister);                 
+                
+            }else{
+                
                 consulta = "FROM User u WHERE u.username LIKE ?1 AND u.email LIKE ?2";
                 query = em.createQuery(consulta);
                 query.setParameter(1, usuario.getUsername() + "%");
-                query.setParameter(2, usuario.getEmail() + "%");
+                query.setParameter(2, usuario.getEmail() + "%");        
 
-
+                
             }
 
             listaUsuarios = query.getResultList();
-
+            
             if (!listaUsuarios.isEmpty()) {
                 System.out.println("encontre algo");
-            }
-
-
+            }            
+            
+            
         } catch (Exception e) {
             System.out.print(e);
             System.out.println("Error al obtener el modelo en getUserByUsername");
@@ -180,7 +187,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
         //System.out.print(user);
         return listaUsuarios;
-
+        
     }
-
+    
 }

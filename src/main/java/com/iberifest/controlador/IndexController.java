@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 
 @Named
 @ViewScoped
@@ -63,6 +64,34 @@ public class IndexController implements Serializable {
         return comprobado;
     }
 
+    public String moveToAdmin() {
+        return "admin.xhtml";
+    }
+
+    public String moveToEvent() {
+        return "event.xhtml";
+    }
+
+    /*public String checkUser() {
+     String direccion = "";
+     try {
+     user = userFacade.getUser(user);
+     if (user == null) {
+     direccion = "publico/error.xhtml?autenticationFailure=true";
+     System.out.println("error euthenticacion");
+     } else {
+     if (true) //TODO comprobar si es admin o no
+     direccion = "privado/admin.xhtml";
+     else
+     direccion = "privado/iberifest.xhtml";
+     //guardo el usuario en la sesion
+     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+     }
+     } catch (Exception e) {
+     System.out.println("Error al comprobar");
+     }
+     return direccion;
+     }*/
     public User getUser() {
         return user;
     }

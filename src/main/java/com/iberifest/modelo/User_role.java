@@ -63,8 +63,13 @@ public class User_role implements Serializable {
             return false;
         }
         final User_role other = (User_role) obj;
-        return this.id == other.id;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
 
+    
+    
 
 }

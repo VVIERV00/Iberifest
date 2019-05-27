@@ -5,13 +5,14 @@
  */
 package com.iberifest.EJB;
 
-import com.iberifest.modelo.User;
+import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User_role;
-
-import javax.ejb.Local;
+import com.iberifest.modelo.User;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
+ *
  * @author adolfo
  */
 @Local
@@ -30,6 +31,8 @@ public interface User_roleFacadeLocal {
     List<User_role> findRange(int[] range);
 
     int count();
-
+    
     List<User_role> findByUserId(User usuario);
+    
+    User_role findByUserAndRole(User usuario, Role role);
 }
