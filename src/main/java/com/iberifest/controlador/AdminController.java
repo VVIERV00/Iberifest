@@ -11,30 +11,15 @@ import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.Converter;
-import org.primefaces.event.CloseEvent;
-import org.primefaces.event.ToggleEvent;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  *
@@ -43,6 +28,7 @@ import org.primefaces.event.ToggleEvent;
 @Named
 @ViewScoped
 public class AdminController implements Serializable {
+    private static Logger logger = Logger.getLogger(RegisterController.class);
 
     @EJB
     private UserFacadeLocal userEJB;
@@ -93,7 +79,7 @@ public class AdminController implements Serializable {
         listaUsuarios = userEJB.getUserByUsername(user);
         //listaUserRoles = new ArrayList<>();
 
-        user = new User();//Para resetear los campos de filtrado            
+        user = new User();//Para resetear los campos de filtrado
 
     }
 
@@ -101,7 +87,17 @@ public class AdminController implements Serializable {
         listaUsuarios = userEJB.findAll();
     }
 
+    public String logout(){
+        User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+
+        logger.info("El admin " + admin.getUsername() + " cierra la sesión");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+        return "../public/index.xhtml";
+
+    }
     public void deleteUser(User u) {
+        User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        logger.info("El admin " + admin.getUsername() + " procede a eliminar al usuario " + u.getUsername());
         userEJB.remove(u);
         //user = new User();
         getAllUsers();

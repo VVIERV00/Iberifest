@@ -6,6 +6,7 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
+import com.iberifest.modelo.User_role;
 import com.iberifest.util.RoleEnum;
 import org.apache.log4j.Logger;
 
@@ -32,6 +33,7 @@ public class RegisterController implements Serializable {
     @EJB
     private User_roleFacadeLocal userRoleEJB;
 
+
     @PostConstruct
     public void init() {
         user = new User();
@@ -42,11 +44,17 @@ public class RegisterController implements Serializable {
     public void save() {
         if (!userFacade.userExistNick(user)) {
             if (!userFacade.userExistEmail(user)) {
-                role = roleFacade.getRoleById(RoleEnum.USER.ordinal());
                 Date register = new Date();
                 user.setRegister_date(register);
                 logger.info("Se procede a crear el usuario " + user.getUsername());
                 userFacade.create(user);
+                User_role rolUsuario = new User_role();
+                rolUsuario.setRole(roleFacade.getRoleById(RoleEnum.USER.ordinal()+1));
+                user = userFacade.getUser(user); //obtengo el id
+                rolUsuario.setUser(user);
+                logger.info("Se procede a asignar el rol " + rolUsuario.getRole().getName()+" a el usuario " + user.getUsername());
+
+                userRoleEJB.create(rolUsuario);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "informacion", "usuario registrado correctamente"));
                 user = new User();
             } else {
