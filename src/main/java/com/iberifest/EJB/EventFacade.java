@@ -37,25 +37,32 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
     }
 
     @Override
-    public List<Event> getEventByName(Event event, User user) {
+    public List<Event> getEventByName(Event event, User user, String coordenadasOrigen, int maxDistancia) {
 
         Query query = null;
         String consulta;
         List<Event> listaEvents;
-
+        
+        if (maxDistancia == 0) maxDistancia = 20;
+        
         try {
             //consulta = "FROM event e WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3 AND u.register_date BETWEEN ?4 AND ?5";
-            if (user != null) {
-                consulta = "FROM Event e WHERE e.name LIKE ?1 AND e.user_iduser.id_user LIKE ?2";
-                query = em.createQuery(consulta);
-                query.setParameter(1, event.getName() + "%");
-                query.setParameter(2, user.getId_user());
-            } else {
-                consulta = "FROM Event e WHERE e.name LIKE ?1";
-                query = em.createQuery(consulta);
-                query.setParameter(1, event.getName() + "%");
-
-            }
+            consulta = "FROM Event e WHERE ?1 ?2 ?3 ?4";
+            query = em.createQuery(consulta);
+            
+            query.setParameter(1, "e.name LIKE " + event.getName() + "%");
+            
+            if (user != null) query.setParameter(2, "AND e.user_iduser.id_user LIKE " + user.getId_user());
+            else query.setParameter(2, "");
+            
+            if (event.getDate_start() != null) query.setParameter(3, "AND e.date_start LIKE " + event.getDate_start());
+            else query.setParameter(3, "");
+            
+            /*
+            if (event.getDate_start() != null) query.setParameter(4, "AND " + maxDistancia + " <= " + calcularDistancia(coordenadasOrigen, event.getCoordinates()));
+            else query.setParameter(4, "");
+            */  
+            
             listaEvents = query.getResultList();
 
             if (!listaEvents.isEmpty()) {
