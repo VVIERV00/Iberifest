@@ -34,21 +34,15 @@ public class AltaEventController implements Serializable {
 
     private Event event;
     private User user;
-    private List<Event> listaEventos;
+
 
     @PostConstruct
     public void init() {
         event = new Event();
         user = new User();
-        listaEventos = new ArrayList<>();
+
     }
-    
-    public void searchEventByFilter()
-    {
-        
-        listaEventos = eventEJB.getEventByName(event);
-        
-    }
+
 
     public void createEvent() {
         try {
@@ -61,15 +55,7 @@ public class AltaEventController implements Serializable {
         }
     }
 
-    public List<Event> getListaEventos() {
-        return listaEventos;
-    }
-
-    public void setListaEventos(List<Event> listaEventos) {
-        this.listaEventos = listaEventos;
-    }
-
-    
+  
 
     public Event getEvent() {
         return event;
