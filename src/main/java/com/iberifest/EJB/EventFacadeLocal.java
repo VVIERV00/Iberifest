@@ -31,6 +31,6 @@ public interface EventFacadeLocal {
 
     int count();
     
-    List<Event> getEventByName(Event event, User user, String coordenadasOrigen, int maxDistancia);
+    List<Event> getEventByName(Event event, User user, String coordenadasOrigen, double maxDistancia);
 
 }

@@ -7,6 +7,7 @@ package com.iberifest.EJB;
 
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
+import com.iberifest.controlador.EventController;
 import com.iberifest.EJB.UserFacade;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,34 +38,49 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
     }
 
     @Override
-    public List<Event> getEventByName(Event event, User user, String coordenadasOrigen, int maxDistancia) {
+    public List<Event> getEventByName(Event event, User user, String coordenadasOrigen, double maxDistancia) {
 
         Query query = null;
         String consulta;
-        List<Event> listaEvents;
-        
-        if (maxDistancia == 0) maxDistancia = 20;
-        
+        List<Event> listaEvents = new ArrayList<Event>(), listaEventsAux;
+
+        if (maxDistancia == 0) {
+            maxDistancia = 20;
+        }
+
         try {
             //consulta = "FROM event e WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3 AND u.register_date BETWEEN ?4 AND ?5";
-            consulta = "FROM Event e WHERE ?1 ?2 ?3 ?4";
+            consulta = "FROM Event e WHERE e.name LIKE ?1";
+            if (user != null) {
+                consulta += " AND e.user_iduser.id_user LIKE ?2 ";
+            }
+            if (event.getDate_start() != null) {
+                consulta += " AND e.date_start LIKE ?3 ";
+            }
             query = em.createQuery(consulta);
-            
-            query.setParameter(1, "e.name LIKE " + event.getName() + "%");
-            
-            if (user != null) query.setParameter(2, "AND e.user_iduser.id_user LIKE " + user.getId_user());
-            else query.setParameter(2, "");
-            
-            if (event.getDate_start() != null) query.setParameter(3, "AND e.date_start LIKE " + event.getDate_start());
-            else query.setParameter(3, "");
-            
-            /*
-            if (event.getDate_start() != null) query.setParameter(4, "AND " + maxDistancia + " <= " + calcularDistancia(coordenadasOrigen, event.getCoordinates()));
-            else query.setParameter(4, "");
-            */  
-            
-            listaEvents = query.getResultList();
 
+            query.setParameter(1, event.getName() + "%");
+
+            if (user != null) {
+                query.setParameter(2, user.getId_user());
+            }
+            if (event.getDate_start() != null) {
+                query.setParameter(3, event.getDate_start());
+            }
+
+            listaEventsAux = query.getResultList();
+
+            if (coordenadasOrigen != null) {
+                for (Event e : listaEventsAux) {
+
+                    if (maxDistancia >= EventController.calcularDistancia(coordenadasOrigen, e.getCoordinates())) {
+                        listaEvents.add(e);
+                    }
+                }
+            } else {
+                listaEvents = listaEventsAux;
+            }
+            
             if (!listaEvents.isEmpty()) {
                 System.out.println("encontre algo en EVENT");
             }
@@ -72,8 +88,7 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
         } catch (Exception e) {
             System.out.print(e);
             System.out.println("Error al obtener el modelo en getEVENT");
-            List<Event> emptyList = new ArrayList<Event>();
-            return emptyList;
+            return listaEvents;
         }
         //System.out.print(user);
         return listaEvents;
