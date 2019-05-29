@@ -61,11 +61,17 @@
         }
     </style>
 
+    <div id="header">
+        <ui:insert name="header">
+            <ui:include src="/WEB-INF/templates/header.xhtml"/>
+        </ui:insert>
+    </div>
 
     <h3 style="margin-top:0">Panel de Adminisitración</h3>
 
 
     <h:form>
+
         <h3>Filtrado de usuarios</h3>
         <h:panelGrid columns="4">
             <p:inputText placeholder="Username" value="#{adminController.user.username}" id="username"></p:inputText>
@@ -117,13 +123,13 @@
         </p:dataTable>
 
     </h:form>
-    <p:button outcome="event.xhtml" value="Ir a eventos" icon="pi pi-star"
-              style="margin-right:20px;">
-    </p:button>
 
-    <p:button outcome="/public/index.xhtml" action="#{adminController.logout()}" value="Cerrar sesión" icon="pi pi-star"
-              style="margin-right:20px;">
-    </p:button>
+
+    <div id="footer">
+        <ui:insert name="footer">
+            <ui:include src="/WEB-INF/templates/footer.xhtml"/>
+        </ui:insert>
+    </div>
 
 </h:body>
 </html>

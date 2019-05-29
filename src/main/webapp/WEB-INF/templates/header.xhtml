@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<body>
+<ui:composition>
+
+
+    <p:button outcome="event.xhtml" value="Ir a eventos" icon="pi pi-star"
+              style="margin-right:20px;">
+    </p:button>
+
+    <p:button outcome="/public/index.xhtml" action="#{adminController.logout()}" value="Cerrar sesión" icon="pi pi-star"
+              style="margin-right:20px;">
+    </p:button>
+
+</ui:composition>
+</body>
+</html>
+
+
