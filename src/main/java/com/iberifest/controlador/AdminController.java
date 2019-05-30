@@ -11,12 +11,14 @@ import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
+import com.iberifest.util.RoleEnum;
+import com.iberifest.util.SessionUtil;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.*;
@@ -26,7 +28,7 @@ import java.util.*;
  * @author adolfo
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class AdminController implements Serializable {
     private static Logger logger = Logger.getLogger(RegisterController.class);
 
@@ -39,9 +41,10 @@ public class AdminController implements Serializable {
     @EJB
     private RoleFacadeLocal roleEJB;
 
+    // @Inject // inyectamos la dependencia
+    // private SessionUtil session;
     private User user;
     private User_role userRole;
-
     private List<User> listaUsuarios;
     private String printOnXhtml;
     private List<Role> allRoles;
@@ -58,6 +61,24 @@ public class AdminController implements Serializable {
 
     @PostConstruct
     public void init() {
+        User checkLog = null;
+        checkLog = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
+        if (checkLog != null) {
+            List<User_role> listaRolesUserLogued = userRoleEJB.findByUserId(checkLog);
+            boolean verificado = false;
+            for (User_role userRole : listaRolesUserLogued) {
+
+                if (userRole.getRole().getId() == RoleEnum.ADMIN.ordinal() + 1) {
+                    verificado = true;
+                }
+            }
+
+            if (!verificado) {
+                logout();
+            }
+        } else {
+            logout();
+        }
         printOnXhtml = "";
         user = new User();
         userRole = new User_role();
@@ -70,6 +91,7 @@ public class AdminController implements Serializable {
         selectedRolesSetNew = new HashSet<>();
         mapUserRoles = new HashMap<>();
         mapUserRolesNew = new HashMap<>();
+
 
     }
 
@@ -88,15 +110,15 @@ public class AdminController implements Serializable {
     }
 
     public String logout(){
-        User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-
+        User admin = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " cierra la sesión");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+        FacesContext.getCurrentInstance().release();
         return "../public/index.xhtml";
 
     }
     public void deleteUser(User u) {
-        User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        User admin = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " procede a eliminar al usuario " + u.getUsername());
         userEJB.remove(u);
         //user = new User();

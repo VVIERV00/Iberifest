@@ -13,14 +13,14 @@ import org.apache.log4j.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 
-@ViewScoped
-@ManagedBean(name = "registerController")
+@SessionScoped
+@Named
 public class RegisterController implements Serializable {
     private static Logger logger = Logger.getLogger(RegisterController.class);
     private User user;
