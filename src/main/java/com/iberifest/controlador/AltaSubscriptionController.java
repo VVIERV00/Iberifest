@@ -17,12 +17,13 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 
 /**
  * @author adolfo
  */
 
-@Named
+@ManagedBean
 @ViewScoped
 public class AltaSubscriptionController implements Serializable {
 

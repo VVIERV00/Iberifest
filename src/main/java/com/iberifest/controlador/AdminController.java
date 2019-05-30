@@ -22,12 +22,13 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.*;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author adolfo
  */
-@Named
+@ManagedBean
 @SessionScoped
 public class AdminController implements Serializable {
     private static Logger logger = Logger.getLogger(RegisterController.class);

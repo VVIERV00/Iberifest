@@ -5,52 +5,44 @@
  */
 package com.iberifest.controlador;
 
-import com.atlis.location.model.impl.Address;
-import com.atlis.location.model.impl.MapPoint;
-import com.atlis.location.nominatim.NominatimAPI;
 import com.iberifest.EJB.EventFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
 import static com.iberifest.util.JsonReader.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Map;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
+
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
-import org.primefaces.event.map.StateChangeEvent;
 
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.LatLngBounds;
+
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 /**
  * @author adolfo
  */
-@Named
+@ManagedBean
 @SessionScoped
 public class EventController implements Serializable {
 
@@ -75,6 +67,7 @@ public class EventController implements Serializable {
     private String coordenadasOrigenTexto;
     private String coordenadasOrigen;
     private Marker marker;
+
     @PostConstruct
     public void init() {
         event = new Event();
@@ -83,7 +76,7 @@ public class EventController implements Serializable {
         listaUsuarios = new ArrayList<>();
         simpleModel = new DefaultMapModel();
         hashMaps = new HashMap<>();
-        maxDistancia = 20;
+        maxDistancia = 20.0;
         coordenadasOrigenTexto = "";
         coordenadasOrigen = "41.9792243,-6.0599661";
 
@@ -158,7 +151,7 @@ public class EventController implements Serializable {
 
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
-        System.out.println("ASFKASKMF: "+marker.getData());
+        System.out.println("ASFKASKMF: " + marker.getData());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Selected", marker.getTitle()));
         //FacesContext.getCurrentInstance().getExternalContext().redirect("");
     }
@@ -196,7 +189,7 @@ public class EventController implements Serializable {
             coord = new LatLng(latD, lngD);
 
             //Basic marker
-            simpleModel.addOverlay(new Marker(coord, e.getName(),e.getId_event()));
+            simpleModel.addOverlay(new Marker(coord, e.getName(), e.getId_event()));
 
             //hashMaps.put(e.getId_event(), simpleModel);
         }
@@ -205,10 +198,10 @@ public class EventController implements Serializable {
 
     public void renderAllCoordinates() {
         simpleModel = new DefaultMapModel();
-        
+
         List<Event> allEvents = eventEJB.findAll();
         for (Event e : allEvents) {
-            
+
             String coordenadas[] = e.getCoordinates().split(",");
             String lat = coordenadas[0];
             String lng = coordenadas[1];
@@ -217,7 +210,7 @@ public class EventController implements Serializable {
             coord = new LatLng(latD, lngD);
 
             //Basic marker
-            simpleModel.addOverlay(new Marker(coord, e.getName(),e.getId_event()));
+            simpleModel.addOverlay(new Marker(coord, e.getName(), e.getId_event()));
 
             //hashMaps.put(e.getId_event(), simpleModel);
         }
@@ -261,8 +254,6 @@ public class EventController implements Serializable {
     public void setMarker(Marker marker) {
         this.marker = marker;
     }
-    
-    
 
     public String getCoordenadasOrigen() {
 

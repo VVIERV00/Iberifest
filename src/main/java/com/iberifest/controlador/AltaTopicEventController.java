@@ -17,12 +17,13 @@ import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 
 /**
  * @author adolfo
  */
 
-@Named
+@ManagedBean
 @SessionScoped
 public class AltaTopicEventController implements Serializable {
 

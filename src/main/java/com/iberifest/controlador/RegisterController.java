@@ -18,9 +18,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
+import javax.faces.bean.ManagedBean;
 
+
+@ManagedBean
 @SessionScoped
-@Named
 public class RegisterController implements Serializable {
     private static Logger logger = Logger.getLogger(RegisterController.class);
     private User user;
