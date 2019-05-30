@@ -9,25 +9,25 @@ import com.iberifest.EJB.EventFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
-
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @author adolfo
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class EventController implements Serializable {
 
     @EJB
@@ -63,7 +63,7 @@ public class EventController implements Serializable {
     public void renderCoordinates() {
 
         for (Event e : listaEventos) {
-            String coordenadas[] = e.getCoordinates().split(",");
+            String[] coordenadas = e.getCoordinates().split(",");
             String lat = coordenadas[0];
             String lng = coordenadas[1];
             double latD = Double.parseDouble(lat);

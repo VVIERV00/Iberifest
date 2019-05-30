@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+<body>
+<ui:composition>
+
+    <p:menubar>
+        <p:menuitem outcome="/private/event.xhtml" value="Ir a eventos" icon="pi pi-star"
+                    style="margin-right:20px;">
+        </p:menuitem>
+
+        <p:menuitem outcome="/private/eventCreation.xhtml" value="Crear eventos" icon="pi pi-star"
+                    style="margin-right:20px;">
+        </p:menuitem>
+
+        <p:menuitem outcome="/private/eventCreation.xhtml" rendered="#{beanPortatil.coste lt 1000}"
+                    value="Administración" icon="pi pi-star"
+                    style="margin-right:20px;">
+        </p:menuitem>
+
+        <p:menuitem outcome="/public/index.xhtml" value="Cerrar sesión" icon="pi pi-star"
+                    style="margin-right:20px;">
+        </p:menuitem>
+    </p:menubar>
+
+</ui:composition>
+</body>
+</html>
+
+

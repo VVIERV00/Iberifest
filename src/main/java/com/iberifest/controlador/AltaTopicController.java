@@ -10,7 +10,7 @@ import com.iberifest.modelo.Topic;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @author adolfo
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class AltaTopicController implements Serializable {
 
     @EJB

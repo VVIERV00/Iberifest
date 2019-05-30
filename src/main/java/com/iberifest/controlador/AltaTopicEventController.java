@@ -14,7 +14,7 @@ import com.iberifest.modelo.Topics_Event;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ import java.io.Serializable;
  */
 
 @Named
-@ViewScoped
+@SessionScoped
 public class AltaTopicEventController implements Serializable {
 
     @EJB
