@@ -7,6 +7,8 @@ package com.iberifest.EJB;
 
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
+import com.iberifest.controlador.EventController;
+import com.iberifest.EJB.UserFacade;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,20 +38,49 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
     }
 
     @Override
-    public List<Event> getEventByName(Event event) {
+    public List<Event> getEventByName(Event event, User user, String coordenadasOrigen, double maxDistancia) {
 
         Query query = null;
         String consulta;
-        List<Event> listaEvents;
+        List<Event> listaEvents = new ArrayList<Event>(), listaEventsAux;
+
+        if (maxDistancia == 0) {
+            maxDistancia = 20;
+        }
 
         try {
             //consulta = "FROM event e WHERE u.username LIKE ?1 AND u.email LIKE ?2 AND u.birthday = ?3 AND u.register_date BETWEEN ?4 AND ?5";
             consulta = "FROM Event e WHERE e.name LIKE ?1";
+            if (user != null) {
+                consulta += " AND e.user_iduser.id_user LIKE ?2 ";
+            }
+            if (event.getDate_start() != null) {
+                consulta += " AND e.date_start LIKE ?3 ";
+            }
             query = em.createQuery(consulta);
+
             query.setParameter(1, event.getName() + "%");
 
-            listaEvents = query.getResultList();
+            if (user != null) {
+                query.setParameter(2, user.getId_user());
+            }
+            if (event.getDate_start() != null) {
+                query.setParameter(3, event.getDate_start());
+            }
 
+            listaEventsAux = query.getResultList();
+
+            if (coordenadasOrigen != null) {
+                for (Event e : listaEventsAux) {
+
+                    if (maxDistancia >= EventController.calcularDistancia(coordenadasOrigen, e.getCoordinates())) {
+                        listaEvents.add(e);
+                    }
+                }
+            } else {
+                listaEvents = listaEventsAux;
+            }
+            
             if (!listaEvents.isEmpty()) {
                 System.out.println("encontre algo en EVENT");
             }
@@ -57,8 +88,7 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
         } catch (Exception e) {
             System.out.print(e);
             System.out.println("Error al obtener el modelo en getEVENT");
-            List<Event> emptyList = new ArrayList<Event>();
-            return emptyList;
+            return listaEvents;
         }
         //System.out.print(user);
         return listaEvents;

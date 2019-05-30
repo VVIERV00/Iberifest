@@ -6,36 +6,114 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
-        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" />
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0"></script>
+        <script type="text/javascript">
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día'
+            };
+
+            console.log("CARGA");
+            /*jQuery("#j_idt5\\:inputDistancia").click(function () {
+             var value = jQuery(this).val();
+             console.log("HOLA" + value);
+             });*/
+
+            jQuery(document).ready(function () {
+                jQuery('#j_idt7\\:inputDistancia_input').hide();
+                runSpinners();
+
+                jQuery("#j_idt7\\:originPlace").keyup(function () {
+                    var content = $("#j_idt7\\:originPlace").val();
+                    jQuery('#j_idt7\\:inputDistancia_input').show();
+                    console.log("HOLA" + content);
+                    if (content == "") {
+                        jQuery('#j_idt7\\:inputDistancia_input').hide();
+                    }
+                });
+            });
+            function runSpinners() {
+                console.log("ENTRA");
+            }
+
+
+
+
+        </script>
     </h:head>
     <h:body>
-      
+
 
         <h:form>
 
 
-            <h3>Filtrado de usuarios</h3>
-            <h:panelGrid columns="4">
-                <p:inputText placeholder="Nombre del Evento" value="#{eventController.event.name}" id="eventName"></p:inputText>
+            <h3>Filtrado de eventos</h3>
+            <p:growl id="growl" showDetail="true" />
 
+            <h:panelGrid columns="2">
+                <p:inputText placeholder="Nombre del Evento" value="#{eventController.event.name}" id="eventName"></p:inputText>
+                <p:inputText placeholder="Nombre del Publicador " value="#{eventController.user.username}" id="eventPublisher"></p:inputText>
+
+
+                <p:inputText placeholder="¿Desde dónde? " value="#{eventController.coordenadasOrigenTexto}" id="originPlace"></p:inputText>
+                <p:inputNumber id="inputDistancia" value="#{eventController.maxDistancia}" symbol=" Km" symbolPosition="s"
+                               decimalSeparator="," thousandSeparator="." emptyValue="sign">  
+                </p:inputNumber>
+                <p:calendar id="start_date" placeholder="startDate" value="#{eventController.event.date_start}"
+                            showOn="button" locale="es"/>
                 <h:commandButton action="#{eventController.searchEventByFilter()}" value="Submit"></h:commandButton>
 
 
             </h:panelGrid>
 
-            <ui:repeat var="evento" value="#{eventController.listaEventos}">
-                
 
-                <p:panel id="horizontal" header="#{evento.name}" toggleable="true" toggleOrientation="horizontal">
-                    <h:panelGrid columns="2" >
-                        <!--<p:graphicImage name="demo/images/godfather/godfather1.jpg" />-->
-                        <p:gmap center="#{evento.coordinates}" zoom="8" type="HYBRID" style="width:50%;height:200px" model="#{eventController.hashMaps[evento.id_event]}"/>
-                        <h:outputText value="Nombre: #{evento.name}"></h:outputText>
-                        <h:outputText value="Descripcion #{evento.description}"></h:outputText>
-                    </h:panelGrid>
-                </p:panel>
-            </ui:repeat>
+
+
+
+            <p:panelGrid columns="2" layout="grid">            
+                <ui:repeat var="evento" value="#{eventController.listaEventos}">
+
+                    <p:panel id="horizontal" header="#{evento.name}">
+                        <h:panelGrid>
+                            <h:outputText value="Nombre: #{evento.name}"></h:outputText>
+                            <h:outputText value="Descripcion #{evento.description}"></h:outputText>
+                        </h:panelGrid>
+                    </p:panel>
+                </ui:repeat>   
+
+                <p:gmap center="#{eventController.coordenadasOrigen}" zoom="6" fitBounds="true" type="ROADMAP" style="width:100%; padding-top:100%" model="#{eventController.simpleModel}">
+                    <p:ajax event="pointSelect" listener="#{eventController.onPointSelect}" update="originPlace" />
+                    <p:ajax event="overlaySelect" listener="#{eventController.onMarkerSelect}" update="growl" />
+                </p:gmap>
+
+            </p:panelGrid>
+
         </h:form>
+
+
     </h:body>
 </html>
 

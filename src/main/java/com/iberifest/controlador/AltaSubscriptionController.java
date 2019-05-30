@@ -6,7 +6,7 @@
 package com.iberifest.controlador;
 
 import com.iberifest.EJB.EventFacadeLocal;
-import com.iberifest.EJB.SubscriptionsFacadeLocal;
+//import com.iberifest.EJB.SubscriptionsFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Subscriptions;
@@ -26,8 +26,8 @@ import java.io.Serializable;
 @ViewScoped
 public class AltaSubscriptionController implements Serializable {
 
-    @EJB
-    private SubscriptionsFacadeLocal subscriptionsEJB;
+   
+    // @EJBprivate SubscriptionsFacadeLocal subscriptionsEJB;
 
     @EJB
     private EventFacadeLocal eventEJB;
@@ -50,7 +50,7 @@ public class AltaSubscriptionController implements Serializable {
 
         try {
 
-            subscriptionsEJB.create(subscription);
+            //subscriptionsEJB.create(subscription);
 
         } catch (Exception e) {
 
