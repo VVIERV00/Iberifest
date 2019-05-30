@@ -37,6 +37,7 @@ import javax.faces.context.FacesContext;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.event.map.StateChangeEvent;
 
@@ -73,7 +74,7 @@ public class EventController implements Serializable {
     private double maxDistancia;
     private String coordenadasOrigenTexto;
     private String coordenadasOrigen;
-
+    private Marker marker;
     @PostConstruct
     public void init() {
         event = new Event();
@@ -155,6 +156,13 @@ public class EventController implements Serializable {
 
     }
 
+    public void onMarkerSelect(OverlaySelectEvent event) {
+        marker = (Marker) event.getOverlay();
+        System.out.println("ASFKASKMF: "+marker.getData());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Selected", marker.getTitle()));
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("");
+    }
+
     public static double calcularDistancia(String coordenadas1, String coordenadas2) {
         double distancia, radioTierra = 6371;
         double lat1, long1, lat2, long2;
@@ -188,17 +196,19 @@ public class EventController implements Serializable {
             coord = new LatLng(latD, lngD);
 
             //Basic marker
-            simpleModel.addOverlay(new Marker(coord, "Localizacion"));
+            simpleModel.addOverlay(new Marker(coord, e.getName(),e.getId_event()));
 
             //hashMaps.put(e.getId_event(), simpleModel);
         }
 
     }
-    
-        public void renderAllCoordinates() {
+
+    public void renderAllCoordinates() {
         simpleModel = new DefaultMapModel();
+        
         List<Event> allEvents = eventEJB.findAll();
         for (Event e : allEvents) {
+            
             String coordenadas[] = e.getCoordinates().split(",");
             String lat = coordenadas[0];
             String lng = coordenadas[1];
@@ -207,7 +217,7 @@ public class EventController implements Serializable {
             coord = new LatLng(latD, lngD);
 
             //Basic marker
-            simpleModel.addOverlay(new Marker(coord, "Localizacion"));
+            simpleModel.addOverlay(new Marker(coord, e.getName(),e.getId_event()));
 
             //hashMaps.put(e.getId_event(), simpleModel);
         }
@@ -244,14 +254,24 @@ public class EventController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }
+    
+    
+
     public String getCoordenadasOrigen() {
 
         if (!listaEventos.isEmpty()) {
             coordenadasOrigen = getMediaCoordinates(listaEventos);
-        }else{
+        } else {
             renderAllCoordinates();
         }
-        
+
         return coordenadasOrigen;
     }
 

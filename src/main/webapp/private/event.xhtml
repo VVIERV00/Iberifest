@@ -45,7 +45,7 @@
             jQuery(document).ready(function () {
                 jQuery('#j_idt7\\:inputDistancia_input').hide();
                 runSpinners();
-                
+
                 jQuery("#j_idt7\\:originPlace").keyup(function () {
                     var content = $("#j_idt7\\:originPlace").val();
                     jQuery('#j_idt7\\:inputDistancia_input').show();
@@ -71,7 +71,7 @@
 
 
             <h3>Filtrado de eventos</h3>
-
+            <p:growl id="growl" showDetail="true" />
 
             <h:panelGrid columns="2">
                 <p:inputText placeholder="Nombre del Evento" value="#{eventController.event.name}" id="eventName"></p:inputText>
@@ -103,8 +103,10 @@
                         </h:panelGrid>
                     </p:panel>
                 </ui:repeat>   
+
                 <p:gmap center="#{eventController.coordenadasOrigen}" zoom="6" fitBounds="true" type="ROADMAP" style="width:100%; padding-top:100%" model="#{eventController.simpleModel}">
                     <p:ajax event="pointSelect" listener="#{eventController.onPointSelect}" update="originPlace" />
+                    <p:ajax event="overlaySelect" listener="#{eventController.onMarkerSelect}" update="growl" />
                 </p:gmap>
 
             </p:panelGrid>

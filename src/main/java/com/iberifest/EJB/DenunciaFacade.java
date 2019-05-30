@@ -5,7 +5,7 @@
  */
 package com.iberifest.EJB;
 
-import com.iberifest.modelo.Subscriptions;
+import com.iberifest.modelo.Denuncia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author adolfo
  */
 @Stateless
-public class SubscriptionsFacade extends AbstractFacade<Subscriptions> implements SubscriptionsFacadeLocal {
+public class DenunciaFacade extends AbstractFacade<Denuncia> implements DenunciaFacadeLocal {
     @PersistenceContext(unitName = "com.mycompany_IberiFest_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class SubscriptionsFacade extends AbstractFacade<Subscriptions> implement
         return em;
     }
 
-    public SubscriptionsFacade() {
-        super(Subscriptions.class);
+    public DenunciaFacade() {
+        super(Denuncia.class);
     }
     
 }
