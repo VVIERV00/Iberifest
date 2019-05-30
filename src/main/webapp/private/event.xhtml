@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
@@ -68,19 +69,21 @@
 
 
         <h:form>
-
-
             <h3>Filtrado de eventos</h3>
-            <p:growl id="growl" showDetail="true" />
+            <p:growl id="growl" showDetail="true"/>
 
             <h:panelGrid columns="2">
-                <p:inputText placeholder="Nombre del Evento" value="#{eventController.event.name}" id="eventName"></p:inputText>
-                <p:inputText placeholder="Nombre del Publicador " value="#{eventController.user.username}" id="eventPublisher"></p:inputText>
+                <p:inputText placeholder="Nombre del Evento" value="#{eventController.event.name}"
+                             id="eventName"></p:inputText>
+                <p:inputText placeholder="Nombre del Publicador " value="#{eventController.user.username}"
+                             id="eventPublisher"></p:inputText>
 
 
-                <p:inputText placeholder="¿Desde dónde? " value="#{eventController.coordenadasOrigenTexto}" id="originPlace"></p:inputText>
-                <p:inputNumber id="inputDistancia" value="#{eventController.maxDistancia}" symbol=" Km" symbolPosition="s"
-                               decimalSeparator="," thousandSeparator="." emptyValue="sign">  
+                <p:inputText placeholder="¿Desde dónde? " value="#{eventController.coordenadasOrigenTexto}"
+                             id="originPlace"></p:inputText>
+                <p:inputNumber id="inputDistancia" value="#{eventController.maxDistancia}" symbol=" Km"
+                               symbolPosition="s"
+                               decimalSeparator="," thousandSeparator="." emptyValue="sign">
                 </p:inputNumber>
                 <p:calendar id="start_date" placeholder="startDate" value="#{eventController.event.date_start}"
                             showOn="button" locale="es"/>
@@ -89,24 +92,24 @@
 
             </h:panelGrid>
 
-
-
-
-
-            <p:panelGrid columns="2" layout="grid">            
+            <p:panelGrid columns="2" layout="grid">
                 <ui:repeat var="evento" value="#{eventController.listaEventos}">
 
                     <p:panel id="horizontal" header="#{evento.name}">
+                        <p:link outcome="/private/eventView.xhtml" value="Más info">
+                            <f:param name="idEvento" value="#{evento.id_event}"/>
+                        </p:link>
                         <h:panelGrid>
                             <h:outputText value="Nombre: #{evento.name}"></h:outputText>
                             <h:outputText value="Descripcion #{evento.description}"></h:outputText>
                         </h:panelGrid>
                     </p:panel>
-                </ui:repeat>   
+                </ui:repeat>
 
-                <p:gmap center="#{eventController.coordenadasOrigen}" zoom="6" fitBounds="true" type="ROADMAP" style="width:100%; padding-top:100%" model="#{eventController.simpleModel}">
-                    <p:ajax event="pointSelect" listener="#{eventController.onPointSelect}" update="originPlace" />
-                    <p:ajax event="overlaySelect" listener="#{eventController.onMarkerSelect}" update="growl" />
+                <p:gmap center="#{eventController.coordenadasOrigen}" zoom="6" fitBounds="true" type="ROADMAP"
+                        style="width:100%; padding-top:100%" model="#{eventController.simpleModel}">
+                    <p:ajax event="pointSelect" listener="#{eventController.onPointSelect}" update="originPlace"/>
+                    <p:ajax event="overlaySelect" listener="#{eventController.onMarkerSelect}" update="growl"/>
                 </p:gmap>
 
             </p:panelGrid>

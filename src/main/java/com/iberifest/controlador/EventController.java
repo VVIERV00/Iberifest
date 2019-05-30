@@ -9,35 +9,30 @@ import com.iberifest.EJB.EventFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
-import static com.iberifest.util.JsonReader.*;
+import com.iberifest.util.EventEnum;
+import org.json.JSONObject;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
-import java.io.Serializable;
-
-import java.util.ArrayList;
-
-import java.util.HashMap;
-
-import java.util.List;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.json.JSONObject;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.event.map.PointSelectEvent;
-
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
+import static com.iberifest.util.JsonReader.readJsonFromUrl;
 
 /**
  * @author adolfo
@@ -202,7 +197,7 @@ public class EventController implements Serializable {
         List<Event> allEvents = eventEJB.findAll();
         for (Event e : allEvents) {
 
-            String coordenadas[] = e.getCoordinates().split(",");
+            String[] coordenadas = e.getCoordinates().split(",");
             String lat = coordenadas[0];
             String lng = coordenadas[1];
             double latD = Double.parseDouble(lat);
@@ -253,6 +248,17 @@ public class EventController implements Serializable {
 
     public void setMarker(Marker marker) {
         this.marker = marker;
+    }
+
+    public void goEvent(int idEvento) {
+        String direccion = "/private/eventView.xhtml";
+        FacesContext.getCurrentInstance().getAttributes().put(EventEnum.ID, idEvento);
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(direccion);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public String getCoordenadasOrigen() {
