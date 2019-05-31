@@ -20,10 +20,12 @@
         <ui:define name="content">
 
 
-            <p:outputLabel>"#{eventViewController.idEvento}" </p:outputLabel>
+            <p:outputLabel>#{eventViewController.idEvento}</p:outputLabel>
             <p:outputLabel>HOLAAAAAAA</p:outputLabel>
 
-
+            <p:outputLabel>#{eventViewController.evento.name}</p:outputLabel>
+            <p:outputLabel>#{eventViewController.evento.description}</p:outputLabel>
+            <p:outputLabel>#{eventViewController.evento.location}</p:outputLabel>
         </ui:define>
 
     </ui:composition>
