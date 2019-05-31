@@ -47,6 +47,10 @@ public class Comentario implements Serializable {
     @ManyToOne
     private User id_user;
 
+    @JoinColumn(name = "id_event")
+    @ManyToOne
+    private Event id_event;
+
     public int getId_comentario() {
         return id_comentario;
     }
@@ -95,6 +99,16 @@ public class Comentario implements Serializable {
         this.id_user = id_user;
     }
 
+    public Event getId_event() {
+        return id_event;
+    }
+
+    public void setId_event(Event id_event) {
+        this.id_event = id_event;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -117,6 +131,4 @@ public class Comentario implements Serializable {
         return true;
     }
 
-    
-    
 }
