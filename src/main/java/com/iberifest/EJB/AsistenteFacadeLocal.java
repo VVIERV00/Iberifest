@@ -6,6 +6,9 @@
 package com.iberifest.EJB;
 
 import com.iberifest.modelo.Asistente;
+import com.iberifest.modelo.Event;
+import com.iberifest.modelo.Subscriptions;
+import com.iberifest.modelo.User;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +33,7 @@ public interface AsistenteFacadeLocal {
 
     int count();
     
+    List<Asistente> findByIdUser(User user);
+    
+    boolean existAsistencia(User user, Event event);
 }

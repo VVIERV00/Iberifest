@@ -49,7 +49,7 @@ public class EventViewController implements Serializable {
 
     @EJB
     private AsistenteFacadeLocal asistenciaEJB;
-    
+
     private int idEvento;
     private Event evento;
     private List<Comentario> listaComentario;
@@ -59,7 +59,6 @@ public class EventViewController implements Serializable {
     private boolean subscripcion;
     private boolean asistencia;
 
-    
     public void searchEventDetails(int id) {
 
         evento = eventEJB.find(id);
@@ -131,7 +130,6 @@ public class EventViewController implements Serializable {
         return idEvento;
     }
 
-
     public void subscripcionesUsuarios() {
 
         Subscriptions subsc = new Subscriptions();
@@ -149,10 +147,9 @@ public class EventViewController implements Serializable {
 
     public void asistenciaUsuarios() {
 
-        
         Asistente asistente = new Asistente();
         User user = usuarioEJB.find(1);
-        
+
         asistente.setId_evento(evento);
         asistente.setId_user(user);
         if (asistencia) {
@@ -211,6 +208,15 @@ public class EventViewController implements Serializable {
     }
 
     public boolean isSubscripcion() {
+
+        User user = usuarioEJB.find(1);
+        if (subscriptionsEJB.existSubscription(user, evento)) {
+            System.out.println("EXISTEEEEEEEEEEEE");
+            subscripcion = true;
+        } else {
+            System.out.println("NASTY");
+            subscripcion = false;
+        }
         return subscripcion;
     }
 
@@ -219,6 +225,15 @@ public class EventViewController implements Serializable {
     }
 
     public boolean isAsistencia() {
+
+        User user = usuarioEJB.find(1);
+        if (asistenciaEJB.existAsistencia(user, evento)) {
+            System.out.println("EXISTEEEEEEEEEEEE ASIS");
+            asistencia = true;
+        } else {
+            System.out.println("NASTY ASIS");
+            asistencia = false;
+        }
         return asistencia;
     }
 

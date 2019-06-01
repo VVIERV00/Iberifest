@@ -5,7 +5,9 @@
  */
 package com.iberifest.EJB;
 
+import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Subscriptions;
+import com.iberifest.modelo.User;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +31,9 @@ public interface SubscriptionsFacadeLocal {
     List<Subscriptions> findRange(int[] range);
 
     int count();
+    
+    List<Subscriptions> findByIdUser(User user);
+    
+    boolean existSubscription(User user, Event event);
     
 }

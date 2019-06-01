@@ -12,23 +12,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="css/index.css"/>
         <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0"></script>
-        <style type="text/css">
-            .ui-toggleswitch {
-                vertical-align: bottom;
-            }
-        </style>
+
     </h:head>
     <h:body id="principal">
-
+        <h:inputHidden value="#{eventViewController.idEvento}" id="hiddenId" />
         <h:form>
-            
+
 
             <h:outputText value="Subscribirme a este evento: " />
             <p:selectBooleanButton id="subscripcion" value="#{eventViewController.subscripcion}" onLabel="Yes" offLabel="No" style="width:60px">
                 <p:ajax listener="#{eventViewController.subscripcionesUsuarios()}" />
             </p:selectBooleanButton>
 
-            
+
 
 
         </h:form>
@@ -39,7 +35,7 @@
                 <p:ajax listener="#{eventViewController.asistenciaUsuarios()}" />
             </p:selectBooleanButton>
         </h:form>
-        <h:inputHidden value="#{eventViewController.idEvento}" id="hiddenId" />
+
         <p:panel id="detallesEvento" header="Detalles del evento"  style="margin-bottom:20px">
 
             <h:panelGrid columns="3">
