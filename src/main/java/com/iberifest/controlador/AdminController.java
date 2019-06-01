@@ -6,10 +6,12 @@
 package com.iberifest.controlador;
 
 import com.iberifest.EJB.DenunciaFacadeLocal;
+import com.iberifest.EJB.EventFacadeLocal;
 import com.iberifest.EJB.RoleFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.Denuncia;
+import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
@@ -33,6 +35,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 @SessionScoped
 public class AdminController implements Serializable {
+
     private static Logger logger = Logger.getLogger(RegisterController.class);
 
     @EJB
@@ -43,9 +46,12 @@ public class AdminController implements Serializable {
 
     @EJB
     private RoleFacadeLocal roleEJB;
-    
+
     @EJB
     private DenunciaFacadeLocal denunciaEJB;
+    
+    @EJB
+    private EventFacadeLocal eventoEJB;
 
     // @Inject // inyectamos la dependencia
     // private SessionUtil session;
@@ -65,6 +71,7 @@ public class AdminController implements Serializable {
     String[] selectedRolesArr;
     String[] selectedRolesArrNew;
     List<Denuncia> denunciasSinResolver;
+    List<Event> eventosSinVerificar;
 
     @PostConstruct
     public void init() {
@@ -99,7 +106,7 @@ public class AdminController implements Serializable {
         mapUserRoles = new HashMap<>();
         mapUserRolesNew = new HashMap<>();
         denunciasSinResolver = new ArrayList<>();
-
+        eventosSinVerificar = new ArrayList<>();
 
     }
 
@@ -117,7 +124,7 @@ public class AdminController implements Serializable {
         listaUsuarios = userEJB.findAll();
     }
 
-    public String logout(){
+    public String logout() {
         User admin = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " cierra la sesión");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
@@ -125,6 +132,7 @@ public class AdminController implements Serializable {
         return "../public/index.xhtml";
 
     }
+
     public void deleteUser(User u) {
         User admin = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " procede a eliminar al usuario " + u.getUsername());
@@ -228,12 +236,17 @@ public class AdminController implements Serializable {
             }
         }
     }
-    
-    public void resolverDenuncia(Denuncia denuncia)
-    {
-        
+
+    public void resolverDenuncia(Denuncia denuncia) {
+
         denuncia.setResuelta(true);
         denunciaEJB.edit(denuncia);
+    }
+    
+    public void verificarEvento(Event event)
+    {
+        event.setVerificado(true);
+        eventoEJB.edit(event);
     }
 
     public HashMap<User, String[]> getMapUserRoles() {
@@ -332,6 +345,15 @@ public class AdminController implements Serializable {
 
     public void setDenunciasSinResolver(List<Denuncia> denunciasSinResolver) {
         this.denunciasSinResolver = denunciasSinResolver;
+    }
+
+    public List<Event> getEventosSinVerificar() {
+        eventosSinVerificar = eventoEJB.findNoVerificados();
+        return eventosSinVerificar;
+    }
+
+    public void setEventosSinVerificar(List<Event> eventosSinVerificar) {
+        this.eventosSinVerificar = eventosSinVerificar;
     }
 
     

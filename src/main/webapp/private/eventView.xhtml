@@ -41,12 +41,15 @@
             <h:panelGrid columns="3">
                 <p:outputLabel><h3>#{eventViewController.evento.name}</h3></p:outputLabel>
                 <h:outputText value="por #{eventViewController.evento.user_iduser.username}"></h:outputText>
+                
                 <h:form>
 
 
                     <p:commandButton value="Denunciar" oncomplete="PF('dlg2').show();" action="#{eventViewController.setComentarioDenuncia(null)}"/>
                 </h:form>
             </h:panelGrid>
+            <p:outputLabel><h5>Verificado</h5></p:outputLabel>
+            <h:outputText value="#{eventViewController.evento.verificado}"></h:outputText>
             <p:outputLabel><h5>Descripción</h5></p:outputLabel>
             <h:outputText value="#{eventViewController.evento.description}"></h:outputText>
             <p:outputLabel><h5>Localización</h5></p:outputLabel>

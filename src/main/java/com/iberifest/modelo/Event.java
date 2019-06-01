@@ -9,12 +9,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
-
 /**
  * @author adolfo
  */
-
 @Entity
 @Table(name = "event")
 public class Event implements Serializable {
@@ -22,7 +19,6 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_event;
-
 
     @Column(name = "name")
     private String name;
@@ -40,6 +36,9 @@ public class Event implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_start;
 
+    @Column(name = "verificado")
+    private boolean verificado;
+    
     @Column(name = "end_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date end_start;
@@ -100,6 +99,15 @@ public class Event implements Serializable {
         this.date_start = date_start;
     }
 
+    public boolean isVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(boolean verificado) {
+        this.verificado = verificado;
+    }
+
+    
     public Date getEnd_start() {
         return end_start;
     }
@@ -124,7 +132,6 @@ public class Event implements Serializable {
         this.user_iduser = user_iduser;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -146,6 +153,5 @@ public class Event implements Serializable {
         }
         return true;
     }
-
 
 }

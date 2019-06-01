@@ -80,7 +80,41 @@
                     </p:dataTable>
 
                 </h:form>
+                <br></br>
+                <br></br>
+                <h:form id="formEventos">
+                    <p:panel id="eventosAutorizacion" header="Eventos no autorizados" style="margin-bottom:20px">
+                        <p:dataTable id="tablaEventos" var="evento" value="#{adminController.eventosSinVerificar}">
+                            <p:column headerText="Id">
+                                <h:outputText value="#{evento.id_event}" />
+                            </p:column>
 
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{evento.name}" />
+                            </p:column>
+
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{evento.description}" />
+                            </p:column>
+
+                            <p:column headerText="Localizacion">
+                                <h:outputText value="#{evento.location}" />
+                            </p:column>
+                            <p:column headerText="Comienzo">
+                                <h:outputText value="#{evento.date_start}" />
+                            </p:column>
+                            <p:column headerText="Subido por">
+                                <h:outputText value="#{evento.user_iduser.username}" />
+                            </p:column>
+                            <p:column headerText="Operaciones">
+                                <p:commandButton update="tablaEventos" value="Verificar evento" id="verificarEvento"
+                                                 action="#{adminController.verificarEvento(evento)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+                <br></br>
+                <br></br>
                 <h:form id="formDenunciasSinResolver">
                     <p:panel id="denunciasPanel" header="Denuncias sin revisar" style="margin-bottom:20px">
                         <p:dataTable id="tablaDenuncias" var="denuncia" value="#{adminController.denunciasSinResolver}">
@@ -102,7 +136,7 @@
                             <p:column headerText="Comentario">
                                 <h:outputText value="#{denuncia.id_comentario.texto}" />
                             </p:column>
-         
+
                             <p:column headerText="Operaciones">
                                 <p:commandButton update="tablaDenuncias" value="Resolver denuncia" id="resolverDenuncia"
                                                  action="#{adminController.resolverDenuncia(denuncia)}"/>
