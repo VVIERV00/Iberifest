@@ -80,6 +80,36 @@
                     </p:dataTable>
 
                 </h:form>
+
+                <h:form id="formDenunciasSinResolver">
+                    <p:panel id="denunciasPanel" header="Denuncias sin revisar" style="margin-bottom:20px">
+                        <p:dataTable id="tablaDenuncias" var="denuncia" value="#{adminController.denunciasSinResolver}">
+                            <p:column headerText="Id">
+                                <h:outputText value="#{denuncia.id_denuncia}" />
+                            </p:column>
+
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{denuncia.descripcion}" />
+                            </p:column>
+
+                            <p:column headerText="Evento">
+                                <h:outputText value="#{denuncia.id_evento.name}" />
+                            </p:column>
+
+                            <p:column headerText="Usuario">
+                                <h:outputText value="#{denuncia.id_user.username}" />
+                            </p:column>
+                            <p:column headerText="Comentario">
+                                <h:outputText value="#{denuncia.id_comentario.texto}" />
+                            </p:column>
+         
+                            <p:column headerText="Operaciones">
+                                <p:commandButton update="tablaDenuncias" value="Resolver denuncia" id="resolverDenuncia"
+                                                 action="#{adminController.resolverDenuncia(denuncia)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

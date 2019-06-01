@@ -12,6 +12,7 @@ import com.iberifest.modelo.Denuncia;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Subscriptions;
 import com.iberifest.modelo.User;
+import com.iberifest.util.SessionUtil;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

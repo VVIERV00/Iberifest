@@ -5,9 +5,11 @@
  */
 package com.iberifest.controlador;
 
+import com.iberifest.EJB.DenunciaFacadeLocal;
 import com.iberifest.EJB.RoleFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
+import com.iberifest.modelo.Denuncia;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
@@ -41,6 +43,9 @@ public class AdminController implements Serializable {
 
     @EJB
     private RoleFacadeLocal roleEJB;
+    
+    @EJB
+    private DenunciaFacadeLocal denunciaEJB;
 
     // @Inject // inyectamos la dependencia
     // private SessionUtil session;
@@ -59,6 +64,7 @@ public class AdminController implements Serializable {
     HashMap<User, String[]> mapUserRolesNew;
     String[] selectedRolesArr;
     String[] selectedRolesArrNew;
+    List<Denuncia> denunciasSinResolver;
 
     @PostConstruct
     public void init() {
@@ -92,6 +98,7 @@ public class AdminController implements Serializable {
         selectedRolesSetNew = new HashSet<>();
         mapUserRoles = new HashMap<>();
         mapUserRolesNew = new HashMap<>();
+        denunciasSinResolver = new ArrayList<>();
 
 
     }
@@ -221,6 +228,13 @@ public class AdminController implements Serializable {
             }
         }
     }
+    
+    public void resolverDenuncia(Denuncia denuncia)
+    {
+        
+        denuncia.setResuelta(true);
+        denunciaEJB.edit(denuncia);
+    }
 
     public HashMap<User, String[]> getMapUserRoles() {
         return mapUserRoles;
@@ -310,4 +324,16 @@ public class AdminController implements Serializable {
         this.listaUserRoles = listaUserRoles;
     }
 
+    public List<Denuncia> getDenunciasSinResolver() {
+        //denunciasSinResolver = denunciaEJB.findAll();
+        denunciasSinResolver = denunciaEJB.findNoResueltas();
+        return denunciasSinResolver;
+    }
+
+    public void setDenunciasSinResolver(List<Denuncia> denunciasSinResolver) {
+        this.denunciasSinResolver = denunciasSinResolver;
+    }
+
+    
+    
 }

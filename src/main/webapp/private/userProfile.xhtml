@@ -35,7 +35,7 @@
             </p:panel>
             <p:panel id="subscripcionUsuario" header="Lista de Subscripciones"  style="margin-bottom:20px">
                 <p:panelGrid columns="2" >
-                    <ui:repeat var="event" value="#{userController.listaEventosAsistente}">
+                    <ui:repeat var="event" value="#{userController.listaEventosSuscritos}">
                         <h:outputText value="Username:" />
                         <h:outputText value="#{event.name}" />
                         <h:outputText value="#{event.description}" />
@@ -45,7 +45,7 @@
             </p:panel>
             <p:panel id="asistenciaUsuario" header="Perfil de Asistencias"  style="margin-bottom:20px">
                 <p:panelGrid columns="2" >
-                    <ui:repeat var="event" value="#{userController.listaEventosSuscritos}">
+                    <ui:repeat var="event" value="#{userController.listaEventosAsistente}">
                         <h:outputText value="Username:" />
                         <h:outputText value="#{event.name}" />
                         <h:outputText value="#{event.description}" /> 

@@ -30,4 +30,6 @@ public interface DenunciaFacadeLocal {
 
     int count();
     
+    List<Denuncia> findNoResueltas();
+    
 }
