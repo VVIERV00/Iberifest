@@ -13,20 +13,20 @@
     <h:form>
 
     <p:menubar>
-        <p:menuitem outcome="/private/event.xhtml" value="Ir a eventos" icon="pi pi-star"
+        <p:menuitem action="#{sessionUtil.getMainPage}" value="Ir a eventos" icon="pi pi-star"
                     style="margin-right:20px;">
         </p:menuitem>
 
-        <p:menuitem outcome="/private/eventCreation.xhtml" value="Crear eventos" icon="pi pi-star"
+        <p:menuitem action="#{sessionUtil.getEventCreationPage}" value="Crear eventos" icon="pi pi-star"
                     style="margin-right:20px;">
         </p:menuitem>
-        <p:menuitem outcome="/private/admin.xhtml" rendered="#{sessionUtil.isAdmin()}" value="Administración" icon="pi pi-star"
+        <p:menuitem action="#{sessionUtil.getAdminPage}" rendered="#{sessionUtil.isAdmin()}" value="Administración"
+                    icon="pi pi-star"
                     style="margin-right:20px; ">
         </p:menuitem>
 
-        <p:menuitem value="Cerrar sesión" icon="pi pi-star"
+        <p:menuitem action="#{sessionUtil.getWellcomePage}" value="Cerrar sesión" icon="pi pi-star"
                     style="margin-right:20px;">
-            <p:commandLink action="#{sessionUtil.logout}" />
         </p:menuitem>
 
 

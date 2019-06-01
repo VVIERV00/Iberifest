@@ -21,6 +21,7 @@ public class SessionUtil implements Serializable {
 
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(IberiUtil.WELLCOME);
         } catch (IOException e) {
@@ -52,5 +53,29 @@ public class SessionUtil implements Serializable {
 
     public Object get(String key) {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(key);
+    }
+
+    public String getAdminPage() {
+        return IberiUtil.ADMIN;
+    }
+
+    public String getMainPage() {
+        return IberiUtil.HOME;
+    }
+
+    public String getWellcomePage() {
+        return IberiUtil.WELLCOME;
+    }
+
+    public String getEventCreationPage() {
+        return IberiUtil.EVENT_CREATION;
+    }
+
+    public String getEventViewPage() {
+        return IberiUtil.EVENT_VIEW;
+    }
+
+    public String getRegisterPage() {
+        return IberiUtil.REGISTER;
     }
 }

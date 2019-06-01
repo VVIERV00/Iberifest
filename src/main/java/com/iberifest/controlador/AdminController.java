@@ -127,8 +127,8 @@ public class AdminController implements Serializable {
         User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " cierra la sesión");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
-        FacesContext.getCurrentInstance().release();
-        return "../public/index.xhtml";
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return IberiUtil.WELLCOME;
 
     }
     public void deleteUser(User u) {

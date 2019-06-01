@@ -23,8 +23,8 @@
 
 
                 <p:menubar>
-                    <p:menuitem value="Registrate " url="register.xhtml" icon="pi pi-times"/>
-                    <p:menuitem value="Inicia sesión" action="#{indexController.login}" icon="pi pi-save"
+                    <p:menuitem value="Registrate " action="#{sessionUtil.getRegisterPage}" icon="pi pi-times"/>
+                    <p:menuitem value="Inicia sesión" action="#{sessionUtil.getWellcomePage}" icon="pi pi-save"
                                 update="messages"/>
                 </p:menubar>
             </h:form>
@@ -52,11 +52,9 @@
                                          style="margin-right:20px"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel header="Nuevos usuarios">
+                <p:panel header="¿No tienes cuenta?">
 
-                    <p:button outcome="register.xhtml" value="Registrate en Iberifest" icon="pi pi-star"
-                              style="margin-right:20px;">
-                    </p:button>
+                    <p:outputLabel>Puedes registrarte y adquirir tu cuenta en Iberifest! Solo tienes que ir al apartado 'Registrarse'.</p:outputLabel>
                 </p:panel>
             </h:form>
             <p:graphicImage url="/resources/img/icon.jpg" alt="Logo iberifest" title="Iberifest is the best"/>

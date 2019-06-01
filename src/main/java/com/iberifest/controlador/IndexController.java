@@ -4,6 +4,7 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
+import com.iberifest.util.IberiUtil;
 import com.iberifest.util.RoleEnum;
 import com.iberifest.util.SessionUtil;
 import org.apache.log4j.Logger;
@@ -47,7 +48,7 @@ public class IndexController implements Serializable {
 
     public String login() {
         FacesMessage message = null;
-        String direccion = "index.xhtml";
+        String direccion = IberiUtil.WELLCOME;
         User comprobado = checkUser();
         if (comprobado != null) {
             //TODO roles
@@ -61,7 +62,7 @@ public class IndexController implements Serializable {
             for (User_role userRole : listaUsuariosRoles) {
 
                 if (userRole.getRole().getName().equals(RoleEnum.ADMIN.name())) {
-                    direccion = "/private/admin.xhtml";
+                    direccion = IberiUtil.ADMIN;
                 }
             }
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(SessionUtil.USER_KEY, comprobado);
@@ -70,15 +71,11 @@ public class IndexController implements Serializable {
         } else {
             logger.info("La contraseña o nombre de usuario (" + user.getUsername() + ") son incorrectos");
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error en el logueo", "Credenciales incorrectas");
-            direccion = "index.xhtml";
+            direccion = IberiUtil.WELLCOME;
         }
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        /*try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(direccion);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
         return direccion;
     }
 
