@@ -11,18 +11,19 @@ import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
+import com.iberifest.util.IberiUtil;
 import com.iberifest.util.RoleEnum;
 import com.iberifest.util.SessionUtil;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
-import javax.faces.bean.ManagedBean;
 
 /**
  *
@@ -63,7 +64,7 @@ public class AdminController implements Serializable {
     @PostConstruct
     public void init() {
         User checkLog = null;
-        checkLog = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
+        checkLog = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         if (checkLog != null) {
             List<User_role> listaRolesUserLogued = userRoleEJB.findByUserId(checkLog);
             boolean verificado = false;
@@ -75,10 +76,22 @@ public class AdminController implements Serializable {
             }
 
             if (!verificado) {
-                logout();
+                try {
+                    logger.info("El usuario " + user.getUsername() + " es expulsado por no ser admin");
+
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(IberiUtil.WELLCOME);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
-            logout();
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+                FacesContext.getCurrentInstance().getExternalContext().redirect(IberiUtil.WELLCOME);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         printOnXhtml = "";
         user = new User();
@@ -111,7 +124,7 @@ public class AdminController implements Serializable {
     }
 
     public String logout(){
-        User admin = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
+        User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " cierra la sesión");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         FacesContext.getCurrentInstance().release();
@@ -119,7 +132,7 @@ public class AdminController implements Serializable {
 
     }
     public void deleteUser(User u) {
-        User admin = (User) FacesContext.getCurrentInstance().getAttributes().get(SessionUtil.USER_KEY);
+        User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " procede a eliminar al usuario " + u.getUsername());
         userEJB.remove(u);
         //user = new User();

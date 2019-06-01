@@ -10,6 +10,8 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
 import com.iberifest.util.EventEnum;
+import com.iberifest.util.IberiUtil;
+import com.iberifest.util.SessionUtil;
 import org.json.JSONObject;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -40,6 +42,7 @@ import static com.iberifest.util.JsonReader.readJsonFromUrl;
 @ManagedBean
 @SessionScoped
 public class EventController implements Serializable {
+    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(EventController.class);
 
     @EJB
     private EventFacadeLocal eventEJB;
@@ -66,7 +69,18 @@ public class EventController implements Serializable {
     @PostConstruct
     public void init() {
         event = new Event();
-        user = new User();
+        user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
+        if (user == null){
+            logger.info("Alguien se ha intentado colar en la página principal" );
+
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+                FacesContext.getCurrentInstance().getExternalContext().redirect(IberiUtil.WELLCOME);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         listaEventos = new ArrayList<>();
         listaUsuarios = new ArrayList<>();
         simpleModel = new DefaultMapModel();
@@ -252,7 +266,7 @@ public class EventController implements Serializable {
 
     public void goEvent(int idEvento) {
         String direccion = "/private/eventView.xhtml";
-        FacesContext.getCurrentInstance().getAttributes().put(EventEnum.ID, idEvento);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(EventEnum.ID.name(), idEvento);
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(direccion);
         } catch (IOException e) {

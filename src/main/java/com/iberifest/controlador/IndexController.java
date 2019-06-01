@@ -4,6 +4,7 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
+import com.iberifest.util.RoleEnum;
 import com.iberifest.util.SessionUtil;
 import org.apache.log4j.Logger;
 
@@ -59,11 +60,11 @@ public class IndexController implements Serializable {
 
             for (User_role userRole : listaUsuariosRoles) {
 
-                if (userRole.getRole().getName().equals("ADMIN")) {
+                if (userRole.getRole().getName().equals(RoleEnum.ADMIN.name())) {
                     direccion = "/private/admin.xhtml";
                 }
             }
-            FacesContext.getCurrentInstance().getAttributes().put(SessionUtil.USER_KEY, comprobado);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(SessionUtil.USER_KEY, comprobado);
 
             //session.add(SessionUtil.USER_KEY, comprobado);
         } else {
