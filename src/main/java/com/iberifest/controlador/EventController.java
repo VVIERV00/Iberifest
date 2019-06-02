@@ -69,8 +69,8 @@ public class EventController implements Serializable {
     @PostConstruct
     public void init() {
         event = new Event();
-        user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
-        if (user == null){
+        User userLog = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
+        if (userLog == null){
             logger.info("Alguien se ha intentado colar en la página principal" );
 
             try {
@@ -88,6 +88,7 @@ public class EventController implements Serializable {
         maxDistancia = 20.0;
         coordenadasOrigenTexto = "";
         coordenadasOrigen = "41.9792243,-6.0599661";
+        user = new User();
 
     }
 

@@ -1,32 +1,35 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head></h:head>
-<h:body>
-    <div style="border-width:2px; ">
-        <ui:insert name="header">
-            <ui:include src="/WEB-INF/templates/header.xhtml"/>
-        </ui:insert>
-    </div>
-    <br/>
+    <h:head>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" />
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0"></script>
+    </h:head>
+    <h:body>
+        <div style="border-width:2px; ">
+            <ui:insert name="header">
+                <ui:include src="/WEB-INF/templates/header.xhtml"/>
+            </ui:insert>
+        </div>
+        <br/>
 
-    <div style="border-width:2px; ">
-        <ui:insert name="content">
-            <ui:include src="/WEB-INF/templates/content.xhtml"/>
-        </ui:insert>
-    </div>
-    <br/>
+        <div style="border-width:2px; ">
+            <ui:insert name="content">
+                <ui:include src="/WEB-INF/templates/content.xhtml"/>
+            </ui:insert>
+        </div>
+        <br/>
 
-    <div style="border-width:2px; ">
-        <ui:insert name="footer">
-            <ui:include src="/WEB-INF/templates/footer.xhtml"/>
-        </ui:insert>
-    </div>
+        <div style="border-width:2px; ">
+            <ui:insert name="footer">
+                <ui:include src="/WEB-INF/templates/footer.xhtml"/>
+            </ui:insert>
+        </div>
 
-</h:body>
+    </h:body>
 </html>
