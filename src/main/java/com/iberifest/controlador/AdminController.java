@@ -5,9 +5,13 @@
  */
 package com.iberifest.controlador;
 
+import com.iberifest.EJB.DenunciaFacadeLocal;
+import com.iberifest.EJB.EventFacadeLocal;
 import com.iberifest.EJB.RoleFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
+import com.iberifest.modelo.Denuncia;
+import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Role;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
@@ -32,6 +36,7 @@ import java.util.*;
 @ManagedBean
 @SessionScoped
 public class AdminController implements Serializable {
+
     private static Logger logger = Logger.getLogger(RegisterController.class);
 
     @EJB
@@ -42,6 +47,12 @@ public class AdminController implements Serializable {
 
     @EJB
     private RoleFacadeLocal roleEJB;
+
+    @EJB
+    private DenunciaFacadeLocal denunciaEJB;
+
+    @EJB
+    private EventFacadeLocal eventoEJB;
 
     // @Inject // inyectamos la dependencia
     // private SessionUtil session;
@@ -60,6 +71,8 @@ public class AdminController implements Serializable {
     HashMap<User, String[]> mapUserRolesNew;
     String[] selectedRolesArr;
     String[] selectedRolesArrNew;
+    List<Denuncia> denunciasSinResolver;
+    List<Event> eventosSinVerificar;
 
     @PostConstruct
     public void init() {
@@ -96,7 +109,7 @@ public class AdminController implements Serializable {
         printOnXhtml = "";
         user = new User();
         userRole = new User_role();
-        allRoles = roleEJB.findAll();
+        
         listaUsuarios = new ArrayList<>();
         rolesPorUsuario = new HashMap<Integer, List<User_role>>();
         listaUserRoles = new ArrayList<>();
@@ -105,7 +118,8 @@ public class AdminController implements Serializable {
         selectedRolesSetNew = new HashSet<>();
         mapUserRoles = new HashMap<>();
         mapUserRolesNew = new HashMap<>();
-
+        denunciasSinResolver = new ArrayList<>();
+        eventosSinVerificar = new ArrayList<>();
 
     }
 
@@ -131,6 +145,7 @@ public class AdminController implements Serializable {
         return IberiUtil.WELLCOME;
 
     }
+
     public void deleteUser(User u) {
         User admin = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         logger.info("El admin " + admin.getUsername() + " procede a eliminar al usuario " + u.getUsername());
@@ -144,28 +159,13 @@ public class AdminController implements Serializable {
 
         listaUserRoles = userRoleEJB.findByUserId(u);
 
-        //Habria que meter un map para saber que selectRoles es de cada usuario.
-        /*for (int i = 0; i < listaUserRoles.size(); i++) {
-
-         // System.out.println(listaUserRoles.get(i).getRole().getName());
-
-            
-         for(int j = 0; j < listaUsuarios.size(); j++)
-         {
-         selectedRolesSet.add(listaUserRoles.get(i).getRole().getName());
-         selectedRolesSetNew.add(listaUserRoles.get(i).getRole().getName());
-         mapUserRoles.put(listaUsuarios.get(j), selectedRolesSet);
-         mapUserRolesNew.put(listaUsuarios.get(j), selectedRolesSetNew);            
-                
-         }
-         }*/
-        //llamar metodo
+   
         return listaUserRoles;
 
     }
 
     public HashMap<User, String[]> auxChange(User u) {
-
+        getAllRoles();
         selectedRolesArr = new String[listaUserRoles.size()];
         selectedRolesArrNew = new String[allRoles.size()];
 
@@ -235,6 +235,17 @@ public class AdminController implements Serializable {
         }
     }
 
+    public void resolverDenuncia(Denuncia denuncia) {
+
+        denuncia.setResuelta(true);
+        denunciaEJB.edit(denuncia);
+    }
+
+    public void verificarEvento(Event event) {
+        event.setVerificado(true);
+        eventoEJB.edit(event);
+    }
+
     public HashMap<User, String[]> getMapUserRoles() {
         return mapUserRoles;
     }
@@ -260,6 +271,7 @@ public class AdminController implements Serializable {
     }
 
     public Set<String> getSelectedRolesSet() {
+        
         return selectedRolesSet;
     }
 
@@ -268,6 +280,7 @@ public class AdminController implements Serializable {
     }
 
     public List<Role> getAllRoles() {
+        allRoles = roleEJB.findAll();
         return allRoles;
     }
 
@@ -321,6 +334,25 @@ public class AdminController implements Serializable {
 
     public void setListaUserRoles(List<User_role> listaUserRoles) {
         this.listaUserRoles = listaUserRoles;
+    }
+
+    public List<Denuncia> getDenunciasSinResolver() {
+        //denunciasSinResolver = denunciaEJB.findAll();
+        denunciasSinResolver = denunciaEJB.findNoResueltas();
+        return denunciasSinResolver;
+    }
+
+    public void setDenunciasSinResolver(List<Denuncia> denunciasSinResolver) {
+        this.denunciasSinResolver = denunciasSinResolver;
+    }
+
+    public List<Event> getEventosSinVerificar() {
+        eventosSinVerificar = eventoEJB.findNoVerificados();
+        return eventosSinVerificar;
+    }
+
+    public void setEventosSinVerificar(List<Event> eventosSinVerificar) {
+        this.eventosSinVerificar = eventosSinVerificar;
     }
 
 }

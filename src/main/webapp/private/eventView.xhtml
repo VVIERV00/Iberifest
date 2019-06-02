@@ -1,35 +1,102 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
->
+      >
 
-<h:head>
-    <title>Iberifest Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <h:head>
+        <title>Iberifest Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0"></script>
 
-</h:head>
-<h:body id="principal">
-    <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
-
-
-        <ui:define name="content">
-
-
-            <p:outputLabel>"#{eventViewController.idEvento}" </p:outputLabel>
-            <p:outputLabel>HOLAAAAAAA</p:outputLabel>
+    </h:head>
+    <h:body id="principal">
+        <h:inputHidden value="#{eventViewController.idEvento}" id="hiddenId" />
+        <h:form>
 
 
-        </ui:define>
+            <h:outputText value="Subscribirme a este evento: " />
+            <p:selectBooleanButton id="subscripcion" value="#{eventViewController.subscripcion}" onLabel="Yes" offLabel="No" style="width:60px">
+                <p:ajax listener="#{eventViewController.subscripcionesUsuarios()}" />
+            </p:selectBooleanButton>
 
-    </ui:composition>
 
 
-</h:body>
+
+        </h:form>
+
+        <h:form>
+            <h:outputText value="Asistiré a este evento: " />
+            <p:selectBooleanButton id="asistencia" value="#{eventViewController.asistencia}" onLabel="Yes" offLabel="No" style="width:60px">
+                <p:ajax listener="#{eventViewController.asistenciaUsuarios()}" />
+            </p:selectBooleanButton>
+        </h:form>
+
+        <p:panel id="detallesEvento" header="Detalles del evento"  style="margin-bottom:20px">
+
+            <h:panelGrid columns="3">
+                <p:outputLabel><h3>#{eventViewController.evento.name}</h3></p:outputLabel>
+                <h:outputText value="por #{eventViewController.evento.user_iduser.username}"></h:outputText>
+                
+                <h:form>
+
+
+                    <p:commandButton value="Denunciar" oncomplete="PF('dlg2').show();" action="#{eventViewController.setComentarioDenuncia(null)}"/>
+                </h:form>
+            </h:panelGrid>
+            <p:outputLabel><h5>Verificado</h5></p:outputLabel>
+            <h:outputText value="#{eventViewController.evento.verificado}"></h:outputText>
+            <p:outputLabel><h5>Descripción</h5></p:outputLabel>
+            <h:outputText value="#{eventViewController.evento.description}"></h:outputText>
+            <p:outputLabel><h5>Localización</h5></p:outputLabel>
+            <h:outputText value="#{eventViewController.evento.location}"></h:outputText>
+            <p:outputLabel>
+                <h5>Comienzo: </h5>
+                <h:outputText value="#{eventViewController.evento.date_start}"></h:outputText>
+                <h5>Fin: </h5>
+                <h:outputText value="#{eventViewController.evento.end_start}"></h:outputText>
+            </p:outputLabel>
+            <hr></hr>
+            <p:gmap center="#{eventViewController.evento.coordinates}" zoom="15" type="ROADMAP" style="width:100%;height:400px" model="#{eventViewController.modelMap}"/>
+
+
+        </p:panel>
+
+
+        <p:panel id="comentariosEvento" header="Comentarios del evento"  style="margin-bottom:20px">
+            <ui:repeat var="comentario" value="#{eventViewController.listaComentario}">
+                <p><strong>#{comentario.id_user.username}</strong> dice:</p>
+                <h:outputText value="#{comentario.texto}"></h:outputText>
+                <h:form>
+                    <p:commandButton value="Positivo" id="votoUp" action="#{eventViewController.votarPositivo(comentario)}" style="margin-right:20px;"/>
+                    <p:commandButton value="Negativo" id="votoDown" action="#{eventViewController.votarNegativo(comentario)}" style="margin-right:20px;"/>
+
+                    <p:commandButton value="Denunciar" oncomplete="PF('dlg2').show();" action="#{eventViewController.setComentarioDenuncia(comentario)}"/>
+                </h:form>
+                <hr></hr>
+            </ui:repeat>
+
+        </p:panel>
+
+
+        <p:dialog header="Motivo de la denuncia" widgetVar="dlg2" modal="true" height="220">
+            <h:form id="form">
+                <p:inputTextarea id="denunciaReset" rows="5" cols="30" counter="display" maxlength="140" counterTemplate="{0} characters remaining." autoResize="false" value="#{eventViewController.descripcionDenuncia}"/>
+                <br></br>
+                <h:outputText id="display" />
+                <br></br>
+                <br></br>
+                <p:commandButton value="Denunciar Evento" id="denunciaEvento" oncomplete="PF('dlg2').hide();" action="#{eventViewController.denunciar(eventViewController.evento, eventViewController.comentarioDenuncia)}" style="margin-right:20px;"/>
+            </h:form>
+
+        </p:dialog>   
+
+
+    </h:body>
 </html>
 
 

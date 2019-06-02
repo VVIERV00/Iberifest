@@ -6,6 +6,7 @@
 package com.iberifest.modelo;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,23 +25,15 @@ public class Asistente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_asistentes;
-
     @JoinColumn(name = "id_user")
     @ManyToOne
     private User id_user;
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "id_evento")
     @ManyToOne
     private Event id_evento;
-
-    public int getId_asistentes() {
-        return id_asistentes;
-    }
-
-    public void setId_asistentes(int id_asistentes) {
-        this.id_asistentes = id_asistentes;
-    }
 
     public User getId_user() {
         return id_user;
@@ -60,8 +53,9 @@ public class Asistente implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + this.id_asistentes;
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id_user);
+        hash = 79 * hash + Objects.hashCode(this.id_evento);
         return hash;
     }
 
@@ -74,11 +68,15 @@ public class Asistente implements Serializable {
             return false;
         }
         final Asistente other = (Asistente) obj;
-        if (this.id_asistentes != other.id_asistentes) {
+        if (!Objects.equals(this.id_user, other.id_user)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_evento, other.id_evento)) {
             return false;
         }
         return true;
     }
-    
-    
+
+
+
 }

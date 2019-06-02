@@ -7,11 +7,11 @@ package com.iberifest.EJB;
 
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
-
-import javax.ejb.Local;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
+ *
  * @author adolfo
  */
 @Local
@@ -30,7 +30,9 @@ public interface EventFacadeLocal {
     List<Event> findRange(int[] range);
 
     int count();
-    
+
     List<Event> getEventByName(Event event, User user, String coordenadasOrigen, double maxDistancia);
+    
+    List<Event> findNoVerificados();
 
 }

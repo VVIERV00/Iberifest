@@ -5,21 +5,18 @@
  */
 package com.iberifest.EJB;
 
+import com.iberifest.controlador.EventController;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.User;
-import com.iberifest.controlador.EventController;
-import com.iberifest.EJB.UserFacade;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
+ *
  * @author adolfo
  */
 @Stateless
@@ -80,7 +77,7 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
             } else {
                 listaEvents = listaEventsAux;
             }
-            
+
             if (!listaEvents.isEmpty()) {
                 System.out.println("encontre algo en EVENT");
             }
@@ -93,6 +90,30 @@ public class EventFacade extends AbstractFacade<Event> implements EventFacadeLoc
         //System.out.print(user);
         return listaEvents;
 
+    }
+
+    @Override
+    public List<Event> findNoVerificados() {
+
+        List<Event> lista = new ArrayList<>();
+
+        try {
+            String consulta = "FROM Event e WHERE e.verificado = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, false);
+
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                System.out.println("encontre algo en EVENT NO VERIFICADOS");
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error al obtener el modelo");
+            System.err.println(e);
+            return null;
+        }
+
+        return lista;
     }
 
 }

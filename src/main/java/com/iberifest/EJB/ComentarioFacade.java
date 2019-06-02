@@ -5,8 +5,8 @@
  */
 package com.iberifest.EJB;
 
-import com.iberifest.modelo.Denuncia;
-import java.util.ArrayList;
+import com.iberifest.modelo.Comentario;
+import com.iberifest.modelo.Event;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +18,7 @@ import javax.persistence.Query;
  * @author adolfo
  */
 @Stateless
-public class DenunciaFacade extends AbstractFacade<Denuncia> implements DenunciaFacadeLocal {
+public class ComentarioFacade extends AbstractFacade<Comentario> implements ComentarioFacadeLocal {
 
     @PersistenceContext(unitName = "com.mycompany_IberiFest_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -28,22 +28,21 @@ public class DenunciaFacade extends AbstractFacade<Denuncia> implements Denuncia
         return em;
     }
 
-    public DenunciaFacade() {
-        super(Denuncia.class);
+    public ComentarioFacade() {
+        super(Comentario.class);
     }
 
     @Override
-    public List<Denuncia> findNoResueltas() {
-
-        List<Denuncia> lista = new ArrayList<>();
-
+    public List<Comentario> findByIdEvent(Event evento) {
+        
+        List<Comentario> listaComentarios;
         try {
-            String consulta = "FROM Denuncia d WHERE d.resuelta = ?1";
+            String consulta = "FROM Comentario c WHERE c.id_event = ?1";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, false);
+            query.setParameter(1, evento);
 
-            lista = query.getResultList();
-            if (!lista.isEmpty()) {
+            listaComentarios = query.getResultList();
+            if (!listaComentarios.isEmpty()) {
                 System.out.println("encontre algo en findComentrid");
 
             }
@@ -53,7 +52,7 @@ public class DenunciaFacade extends AbstractFacade<Denuncia> implements Denuncia
             return null;
         }
 
-        return lista;
+        return listaComentarios;
     }
 
 }
