@@ -15,6 +15,9 @@
 
     </h:head>
     <h:body id="principal">
+         <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
+
+            <ui:define name="content">    
         <h:inputHidden value="#{eventViewController.idEvento}" id="hiddenId" />
         <h:form>
 
@@ -41,7 +44,7 @@
             <h:panelGrid columns="3">
                 <p:outputLabel><h3>#{eventViewController.evento.name}</h3></p:outputLabel>
                 <h:outputText value="por #{eventViewController.evento.user_iduser.username}"></h:outputText>
-                
+
                 <h:form>
 
 
@@ -51,7 +54,7 @@
             <p:outputLabel><h5>Verificado</h5></p:outputLabel>
             <h:outputText value="#{eventViewController.evento.verificado}"></h:outputText>
             <p:outputLabel><h5>Descripción</h5></p:outputLabel>
-            <h:outputText value="#{eventViewController.evento.description}"></h:outputText>
+            <h:outputText value="#{eventViewController.evento.description}" escape="false"></h:outputText>
             <p:outputLabel><h5>Localización</h5></p:outputLabel>
             <h:outputText value="#{eventViewController.evento.location}"></h:outputText>
             <p:outputLabel>
@@ -66,21 +69,26 @@
 
         </p:panel>
 
+        <h:form id="formComentario">
+            <p:panel id="comentariosEvento" header="Comentarios del evento"  style="margin-bottom:20px">
+                <p:inputTextarea rows="6" cols="100" value="#{eventViewController.contenidoComentario}" />
+                <br></br>
+                <br></br>   
+                <p:commandButton value="Comentar" action="#{eventViewController.crearComentario()}" update="formComentario"></p:commandButton>
+                <ui:repeat var="comentario" value="#{eventViewController.listaComentario}">
+                    <p><strong>#{comentario.id_user.username}</strong> dice:</p>
+                    <h:outputText value="#{comentario.texto}"></h:outputText>
 
-        <p:panel id="comentariosEvento" header="Comentarios del evento"  style="margin-bottom:20px">
-            <ui:repeat var="comentario" value="#{eventViewController.listaComentario}">
-                <p><strong>#{comentario.id_user.username}</strong> dice:</p>
-                <h:outputText value="#{comentario.texto}"></h:outputText>
-                <h:form>
                     <p:commandButton value="Positivo" id="votoUp" action="#{eventViewController.votarPositivo(comentario)}" style="margin-right:20px;"/>
                     <p:commandButton value="Negativo" id="votoDown" action="#{eventViewController.votarNegativo(comentario)}" style="margin-right:20px;"/>
 
                     <p:commandButton value="Denunciar" oncomplete="PF('dlg2').show();" action="#{eventViewController.setComentarioDenuncia(comentario)}"/>
-                </h:form>
-                <hr></hr>
-            </ui:repeat>
 
-        </p:panel>
+                    <hr></hr>
+                </ui:repeat>
+
+            </p:panel>
+        </h:form>
 
 
         <p:dialog header="Motivo de la denuncia" widgetVar="dlg2" modal="true" height="220">
@@ -95,6 +103,8 @@
 
         </p:dialog>   
 
+ </ui:define>
+        </ui:composition>
 
     </h:body>
 </html>

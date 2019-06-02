@@ -7,8 +7,53 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:head>
-        <h:outputScript library="primefaces" name="jquery/jquery.js" />
-        <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0"></script>
+          <h:outputScript library="primefaces" name="jquery/jquery.js" />
+                <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0"></script>
+
+                <script>
+                    PrimeFaces.locales['es'] = {
+                        closeText: 'Cerrar',
+                        prevText: 'Anterior',
+                        nextText: 'Siguiente',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                        weekHeader: 'Semana',
+                        firstDay: 1,
+                        isRTL: false,
+                        showMonthAfterYear: false,
+                        yearSuffix: '',
+                        timeOnlyTitle: 'Sólo hora',
+                        timeText: 'Tiempo',
+                        hourText: 'Hora',
+                        minuteText: 'Minuto',
+                        secondText: 'Segundo',
+                        currentText: 'Fecha actual',
+                        ampm: false,
+                        month: 'Mes',
+                        week: 'Semana',
+                        day: 'Día',
+                        allDayText: 'Todo el día'
+                    };
+
+
+                    jQuery(document).ready(function () {
+                        jQuery('#j_idt15\\:inputDistancia_input').hide();
+
+
+                        jQuery("#j_idt15\\:originPlace").keyup(function () {
+                            var content = $("#j_idt15\\:originPlace").val();
+                            jQuery('#j_idt15\\:inputDistancia_input').show();
+
+                            if (content == "") {
+                                jQuery('#j_idt15\\:inputDistancia_input').hide();
+                            }
+                        });
+                    });
+
+                </script>
     </h:head>
     <h:body>
         <div style="border-width:2px; ">

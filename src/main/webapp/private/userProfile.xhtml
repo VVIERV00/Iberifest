@@ -12,48 +12,54 @@
 
 
     <h:body>
+        <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
 
-        <p:panelGrid columns="3">
-            <p:panel id="detallesUsuario" header="Perfil de usuario"  style="margin-bottom:20px">
+            <ui:define name="content">   
+                <p:panelGrid columns="3">
+                    <p:panel id="detallesUsuario" header="Perfil de usuario"  style="margin-bottom:20px">
 
-                <p:panelGrid columns="2">
-                    <h:outputText value="Username:" />
-                    <h:outputText value="#{userController.user.username}" />
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Username:" />
+                            <h:outputText value="#{userController.user.username}" />
 
-                    <h:outputText value="Name:" />
-                    <h:outputText value="#{userController.user.name}" />
+                            <h:outputText value="Name:" />
+                            <h:outputText value="#{userController.user.name}" />
 
-                    <h:outputText value="Email" />
-                    <h:outputText value="#{userController.user.email}" />
+                            <h:outputText value="Email" />
+                            <h:outputText value="#{userController.user.email}" />
 
-                    <h:outputText value="Phone" />
-                    <h:outputText value="#{userController.user.phone}" />
+                            <h:outputText value="Phone" />
+                            <h:outputText value="#{userController.user.phone}" />
 
-                    <h:outputText value="Birthday" />
-                    <h:outputText value="#{userController.user.birthday}" />
+                            <h:outputText value="Birthday" />
+                            <h:outputText value="#{userController.user.birthday}" />
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel id="subscripcionUsuario" header="Lista de Subscripciones"  style="margin-bottom:20px">
+                        <p:panelGrid columns="2" >
+                            <ui:repeat var="event" value="#{userController.listaEventosSuscritos}">
+                                
+                                <h:outputText value="Evento: #{event.name}" />
+                                <hr></hr>
+                                
+                            </ui:repeat>
+
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel id="asistenciaUsuario" header="Perfil de Asistencias"  style="margin-bottom:20px">
+                        <p:panelGrid columns="2" >
+                            <ui:repeat var="event" value="#{userController.listaEventosAsistente}">
+                                
+                                <h:outputText value="Evento: #{event.name}" />
+                                <hr></hr>
+                                
+                            </ui:repeat>
+
+                        </p:panelGrid>
+                    </p:panel>
                 </p:panelGrid>
-            </p:panel>
-            <p:panel id="subscripcionUsuario" header="Lista de Subscripciones"  style="margin-bottom:20px">
-                <p:panelGrid columns="2" >
-                    <ui:repeat var="event" value="#{userController.listaEventosSuscritos}">
-                        <h:outputText value="Username:" />
-                        <h:outputText value="#{event.name}" />
-                        <h:outputText value="#{event.description}" />
-                    </ui:repeat>
-
-                </p:panelGrid>
-            </p:panel>
-            <p:panel id="asistenciaUsuario" header="Perfil de Asistencias"  style="margin-bottom:20px">
-                <p:panelGrid columns="2" >
-                    <ui:repeat var="event" value="#{userController.listaEventosAsistente}">
-                        <h:outputText value="Username:" />
-                        <h:outputText value="#{event.name}" />
-                        <h:outputText value="#{event.description}" /> 
-                    </ui:repeat>
-
-                </p:panelGrid>
-            </p:panel>
-        </p:panelGrid>
+            </ui:define>
+        </ui:composition>
 
     </h:body>
 </html>

@@ -6,12 +6,14 @@ import com.iberifest.EJB.DenunciaFacadeLocal;
 import com.iberifest.EJB.EventFacadeLocal;
 import com.iberifest.EJB.SubscriptionsFacadeLocal;
 import com.iberifest.EJB.UserFacadeLocal;
+import com.iberifest.EJB.VotosFacadeLocal;
 import com.iberifest.modelo.Asistente;
 import com.iberifest.modelo.Comentario;
 import com.iberifest.modelo.Denuncia;
 import com.iberifest.modelo.Event;
 import com.iberifest.modelo.Subscriptions;
 import com.iberifest.modelo.User;
+import com.iberifest.modelo.Votos;
 import com.iberifest.util.SessionUtil;
 
 import javax.faces.bean.ManagedBean;
@@ -51,6 +53,9 @@ public class EventViewController implements Serializable {
     @EJB
     private AsistenteFacadeLocal asistenciaEJB;
 
+    @EJB
+    private VotosFacadeLocal votosEJB;
+
     private int idEvento;
     private Event evento;
     private List<Comentario> listaComentario;
@@ -59,6 +64,7 @@ public class EventViewController implements Serializable {
     private String descripcionDenuncia;
     private boolean subscripcion;
     private boolean asistencia;
+    private String contenidoComentario;
 
     public void searchEventDetails(int id) {
 
@@ -85,18 +91,78 @@ public class EventViewController implements Serializable {
 
     public void votarPositivo(Comentario comentario) {
 
-        Comentario comentarioAux;
-        int votos;
-        comentarioAux = comentarioEJB.find(comentario.getId_comentario());
-        votos = comentarioAux.getVotos_up();
-        votos += 1;
-        comentarioAux.setVotos_up(votos);
-        comentarioEJB.edit(comentarioAux);
+        Votos votos = new Votos();
+        int votosContador;
+        User userLog = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
+
+        if (votosEJB.existeVoto(comentario, userLog)) {
+
+            votos = votosEJB.findByComentAndUser(comentario, userLog);
+
+            if (votos.getValue() == -1) {
+                comentario.setVotos_down(comentario.getVotos_down() - 1);
+                comentario.setVotos_up(comentario.getVotos_up() + 1);
+                comentarioEJB.edit(comentario);
+
+                votos.setValue(1);
+                votosEJB.edit(votos);
+                System.out.println("POSITIVO EXISTE");
+            } else {
+
+            }
+
+        } else {
+            System.out.println("POSITIVO NO EXISTE");
+            votosContador = comentario.getVotos_up();
+            votosContador += 1;
+            comentario.setVotos_up(votosContador);
+            comentarioEJB.edit(comentario);
+            votos.setId_comentario(comentario);
+            votos.setId_user(userLog);
+            votos.setValue(1);
+            votosEJB.create(votos);
+        }
+
+    }
+
+    public void votarNegativo(Comentario comentario) {
+
+        int votosContador;
+        Votos votos = new Votos();
+        User userLog = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
+
+        if (votosEJB.existeVoto(comentario, userLog)) {
+
+            votos = votosEJB.findByComentAndUser(comentario, userLog);
+
+            if (votos.getValue() == 1) {
+                comentario.setVotos_down(comentario.getVotos_down() + 1);
+                comentario.setVotos_up(comentario.getVotos_up() - 1);
+                comentarioEJB.edit(comentario);
+
+                votos.setValue(-1);
+                votosEJB.edit(votos);
+                System.out.println("NEGATIVO EXISTE");
+            } else {
+                //
+            }
+
+        } else {
+            System.out.println("NEGATIVO NO EXISTE");
+            votosContador = comentario.getVotos_down();
+            votosContador += 1;
+            comentario.setVotos_down(votosContador);
+            comentarioEJB.edit(comentario);
+            votos.setId_comentario(comentario);
+            votos.setId_user(userLog);
+            votos.setValue(-1);
+            votosEJB.create(votos);
+        }
 
     }
 
     public void denunciar(Event event, Comentario comentario) {
-        User user = usuarioEJB.find(1);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         Denuncia denuncia = new Denuncia();
         denuncia.setId_user(user);
         denuncia.setFecha(new Date());
@@ -107,18 +173,19 @@ public class EventViewController implements Serializable {
 
     }
 
-    public void votarNegativo(Comentario comentario) {
-
-        Comentario comentarioAux;
-        int votos;
-        comentarioAux = comentarioEJB.find(comentario.getId_comentario());
-        votos = comentarioAux.getVotos_down();
-        votos += 1;
-        comentarioAux.setVotos_down(votos);
-        comentarioEJB.edit(comentarioAux);
-
+    public void crearComentario()
+    {
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
+        Comentario comentario = new Comentario();
+        comentario.setId_event(evento);
+        comentario.setId_user(user);
+        comentario.setTexto(contenidoComentario);
+        comentario.setFecha(new Date());
+        comentarioEJB.create(comentario);
+        listaComentario = comentarioEJB.findByIdEvent(evento);
+        contenidoComentario = "";
+        
     }
-
     public int getIdEvento() {
 
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -134,7 +201,7 @@ public class EventViewController implements Serializable {
     public void subscripcionesUsuarios() {
 
         Subscriptions subsc = new Subscriptions();
-        User user = usuarioEJB.find(1);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         subsc.setId_event(evento);
         subsc.setId_user(user);
         if (subscripcion) {
@@ -149,7 +216,7 @@ public class EventViewController implements Serializable {
     public void asistenciaUsuarios() {
 
         Asistente asistente = new Asistente();
-        User user = usuarioEJB.find(1);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
 
         asistente.setId_evento(evento);
         asistente.setId_user(user);
@@ -210,7 +277,7 @@ public class EventViewController implements Serializable {
 
     public boolean isSubscripcion() {
 
-        User user = usuarioEJB.find(1);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         if (subscriptionsEJB.existSubscription(user, evento)) {
             System.out.println("EXISTEEEEEEEEEEEE");
             subscripcion = true;
@@ -227,7 +294,7 @@ public class EventViewController implements Serializable {
 
     public boolean isAsistencia() {
 
-        User user = usuarioEJB.find(1);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
         if (asistenciaEJB.existAsistencia(user, evento)) {
             System.out.println("EXISTEEEEEEEEEEEE ASIS");
             asistencia = true;
@@ -242,4 +309,13 @@ public class EventViewController implements Serializable {
         this.asistencia = asistencia;
     }
 
+    public String getContenidoComentario() {
+        return contenidoComentario;
+    }
+
+    public void setContenidoComentario(String contenidoComentario) {
+        this.contenidoComentario = contenidoComentario;
+    }
+
+    
 }
