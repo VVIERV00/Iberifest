@@ -53,7 +53,7 @@ public class IndexController implements Serializable {
         if (comprobado != null) {
             //TODO roles
 
-
+            direccion= IberiUtil.HOME;
             //guardo el usuario en la sesion
             logger.info("Se procede a iniciar la sesion del usuario " + user.getUsername() + " con rol: ");
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", user.getUsername());
