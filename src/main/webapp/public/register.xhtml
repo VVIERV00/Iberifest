@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
 
@@ -14,65 +15,79 @@
 </h:head>
 <h:body>
 
+    <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
+        <ui:define name="header">
+            <h:form>
+                <p:growl id="messages"/>
 
-    <h:form>
 
-        <p:growl id="growl" sticky="true" showDetail="true"/>
+                <p:menubar>
+                    <p:menuitem value="Registraterse " action="#{sessionUtil.getRegisterPage}" icon="pi pi-times"/>
+                    <p:menuitem value="Inicia sesión" action="#{sessionUtil.getWellcomePage}" icon="pi pi-save"
+                                update="messages"/>
+                </p:menubar>
+            </h:form>
+        </ui:define>
+        <ui:define name="content">
 
-        <p:tab id="personal" title="Personal">
-            <p:panel header="Datos personales">
-                <p:messages id="msgPrincipal" severity="info, fatal" showDetail="true" showSummary="true"/>
+            <h:form>
 
-                <h:panelGrid columns="2" columnClasses="label, value">
+                <p:growl id="growl" sticky="true" showDetail="true"/>
 
-                    <h:outputText for="name" value="Nombre: "/>
-                    <p:inputText id="name" value="#{registerController.user.name}" required="true" label="Lastname"
-                                 autocomplete="false" requiredMessage="Necesitamos saber tu nombre"/>
+                <p:tab id="personal" title="Personal">
+                    <p:panel header="Datos personales">
+                        <p:messages id="msgPrincipal" severity="info, fatal" showDetail="true" showSummary="true"/>
 
-                    <h:outputText for="nick" value="Nick: "/>
-                    <p:inputText id="nick" value="#{registerController.user.username}" required="true"
-                                 requiredMessage="Tienes que elegir un nick" autocomplete="false" label="Firstname"/>
+                        <h:panelGrid columns="2" columnClasses="label, value">
 
-                    <h:outputText for="email" value="Email: "/>
-                    <p:inputText id="email" value="#{registerController.user.email}" required="true"
-                                 autocomplete="false" requiredMessage="Necesitas indicarnos un email" label="Email"/>
+                            <h:outputText for="name" value="Nombre: "/>
+                            <p:inputText id="name" value="#{registerController.user.name}" required="true" label="Lastname"
+                                         autocomplete="false" requiredMessage="Necesitamos saber tu nombre"/>
 
-                    <h:outputText for="birthday" value="Fecha de nacimiento: "/>
-                    <p:datePicker id="birthday" value="#{registerController.user.birthday}"
-                                  requiredMessage="Fecha de nacimiento necesaria" pattern="yyyy-MM-dd" required="true"
-                                  autocomplete="false" label="Email"/>
+                            <h:outputText for="nick" value="Nick: "/>
+                            <p:inputText id="nick" value="#{registerController.user.username}" required="true"
+                                         requiredMessage="Tienes que elegir un nick" autocomplete="false" label="Firstname"/>
 
-                    <h:outputText for="pass" value="Contraseña: "/>
-                    <p:password id="pass" match="pass2" required="true" label="Contraseña"
-                                value="#{registerController.user.password}" requiredMessage="Introduce tu contraseña"
-                                autocomplete="false" feedback="true"/>
+                            <h:outputText for="email" value="Email: "/>
+                            <p:inputText id="email" value="#{registerController.user.email}" required="true"
+                                         autocomplete="false" requiredMessage="Necesitas indicarnos un email" label="Email"/>
 
-                    <h:outputText for="pass2" value="Repita contraseña: "/>
-                    <p:password id="pass2" value="#{registerController.user.password}"
-                                requiredMessage="Vuelve a introducir tu contraseña" required="true"
-                                label="Contraseña repetida"
-                                autocomplete="false" feedback="true"/>
+                            <h:outputText for="birthday" value="Fecha de nacimiento: "/>
+                            <p:datePicker id="birthday" value="#{registerController.user.birthday}"
+                                          requiredMessage="Fecha de nacimiento necesaria" pattern="yyyy-MM-dd" required="true"
+                                          autocomplete="false" />
 
-                    <h:outputText value="Teléfono: "/>
-                    <p:inputMask id="tlfn" autocomplete="false" mask="+99 999999999"
-                                 value="#{registerController.user.phone}" required="true"
-                                 requiredMessage="Introduce un número de teléfono"/>
+                            <h:outputText for="pass" value="Contraseña: "/>
+                            <p:password id="pass" match="pass2" required="true" label="Contraseña"
+                                        value="#{registerController.user.password}" requiredMessage="Introduce tu contraseña"
+                                        autocomplete="false" feedback="true"/>
 
-                </h:panelGrid>
-                <h:commandButton value="Registro" action="#{registerController.save}" icon="pi pi-star"
-                                 style="margin-right:20px;"/>
+                            <h:outputText for="pass2" value="Repita contraseña: "/>
+                            <p:password id="pass2" value="#{registerController.user.password}"
+                                        requiredMessage="Vuelve a introducir tu contraseña" required="true"
+                                        label="Contraseña repetida"
+                                        autocomplete="false" feedback="true"/>
 
-            </p:panel>
-            <p:panel header="¿Ya tienes cuenta?">
+                            <h:outputText value="Teléfono: "/>
+                            <p:inputMask id="tlfn" autocomplete="false" mask="+99 999999999"
+                                         value="#{registerController.user.phone}" required="true"
+                                         requiredMessage="Introduce un número de teléfono"/>
 
-                <p:button outcome="index.xhtml" value="Inicia sesión en Iberifest" icon="pi pi-star"
-                          style="margin-right:20px;">
-                </p:button>
-            </p:panel>
+                        </h:panelGrid>
+                        <h:commandButton value="Registro" action="#{registerController.save}" icon="pi pi-star"
+                                         style="margin-right:20px;"/>
 
-        </p:tab>
+                    </p:panel>
+                    <p:panel header="¿Ya tienes cuenta?">
 
-    </h:form>
+                        <p:outputLabel>Puedes iniciar sesión con tu cuenta y acceder a la plataforma. Solo tienes que ir al apartado 'Iniciar sesión'.</p:outputLabel>
+                    </p:panel>
+
+                </p:tab>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
 
 </h:body>
 </html>

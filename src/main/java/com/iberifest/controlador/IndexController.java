@@ -4,6 +4,8 @@ import com.iberifest.EJB.UserFacadeLocal;
 import com.iberifest.EJB.User_roleFacadeLocal;
 import com.iberifest.modelo.User;
 import com.iberifest.modelo.User_role;
+import com.iberifest.util.IberiUtil;
+import com.iberifest.util.RoleEnum;
 import com.iberifest.util.SessionUtil;
 import org.apache.log4j.Logger;
 
@@ -46,12 +48,12 @@ public class IndexController implements Serializable {
 
     public String login() {
         FacesMessage message = null;
-        String direccion = "index.xhtml";
+        String direccion = IberiUtil.WELLCOME;
         User comprobado = checkUser();
         if (comprobado != null) {
             //TODO roles
 
-
+            direccion= IberiUtil.HOME;
             //guardo el usuario en la sesion
             logger.info("Se procede a iniciar la sesion del usuario " + user.getUsername() + " con rol: ");
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", user.getUsername());
@@ -59,25 +61,21 @@ public class IndexController implements Serializable {
 
             for (User_role userRole : listaUsuariosRoles) {
 
-                if (userRole.getRole().getName().equals("ADMIN")) {
-                    direccion = "/private/admin.xhtml";
+                if (userRole.getRole().getName().equals(RoleEnum.ADMIN.name())) {
+                    direccion = IberiUtil.ADMIN;
                 }
             }
-            FacesContext.getCurrentInstance().getAttributes().put(SessionUtil.USER_KEY, comprobado);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(SessionUtil.USER_KEY, comprobado);
 
             //session.add(SessionUtil.USER_KEY, comprobado);
         } else {
             logger.info("La contraseña o nombre de usuario (" + user.getUsername() + ") son incorrectos");
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error en el logueo", "Credenciales incorrectas");
-            direccion = "index.xhtml";
+            direccion = IberiUtil.WELLCOME;
         }
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        /*try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(direccion);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
         return direccion;
     }
 
