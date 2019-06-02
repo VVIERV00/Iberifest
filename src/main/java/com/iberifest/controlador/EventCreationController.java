@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import static com.iberifest.util.JsonReader.readJsonFromUrl;
+import java.util.logging.Level;
+import javax.faces.context.ExternalContext;
 
 @ManagedBean
 @SessionScoped
@@ -68,41 +70,22 @@ public class EventCreationController implements Serializable {
     }
 
 
-    public void onPointSelect(PointSelectEvent event) {
-        LatLng latlng = event.getLatLng();
-
-        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Selected", "Lat:" + latlng.getLat() + ", Lng:" + latlng.getLng()));
-        String lat = String.valueOf(latlng.getLat());
-        String lng = String.valueOf(latlng.getLng());
-        String coordenadas = lat + "," + lng;
-        evento.setCoordinates(getAddressFromCoordinates(coordenadas));
-        evento.setLocation(getAddressFromCoordinates(coordenadas));
-    }
-
-    public String getAddressFromCoordinates(String coordinates) {
-
-        JSONObject json;
-        String lng, lat, coordenadas;
-        String address = "";
-        try {
-            json = readJsonFromUrl("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + coordinates + "&key=" + API_KEY + "");
-            //address = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lat").toString();
-            address = json.getJSONArray("results").getJSONObject(1).getString("formatted_address");
-        } catch (Exception ex) {
-            logger.error(ex);
-        }
-        System.out.println(address);
-        return address;
-
-    }
 
     public void create(){
         Date register = new Date();
+        EventController ev = new EventController();
+        System.out.println("NONONONONONNONOONNOONON "+evento.getLocation());
+        String coordenadas = ev.getCoordinatesFromString(evento.getLocation());
+        System.out.println("SDJASDKASLDKJASDKJASKJLASKDLJ "+coordenadas);
+        evento.setCoordinates(coordenadas);
         evento.setCreation_date(register);
+        
         evento.setUser_iduser(usuario); //que es esto?
         eventFacade.create(evento);
         logger.info("El usuario " + usuario.getUsername() + " crea el evento: " + evento.getName());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha creado el evento", "usuario registrado correctamente"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha creado el evento", "evento registrado correctamente"));
+         evento = new Event();
+    
     }
 
     public Event getEvento() {

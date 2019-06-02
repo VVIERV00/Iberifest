@@ -35,6 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.iberifest.util.JsonReader.readJsonFromUrl;
+import javax.persistence.PostLoad;
 
 /**
  * @author adolfo
@@ -42,6 +43,7 @@ import static com.iberifest.util.JsonReader.readJsonFromUrl;
 @ManagedBean
 @SessionScoped
 public class EventController implements Serializable {
+
     private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(EventController.class);
 
     @EJB
@@ -70,8 +72,8 @@ public class EventController implements Serializable {
     public void init() {
         event = new Event();
         User userLog = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionUtil.USER_KEY);
-        if (userLog == null){
-            logger.info("Alguien se ha intentado colar en la página principal" );
+        if (userLog == null) {
+            logger.info("Alguien se ha intentado colar en la página principal");
 
             try {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
@@ -115,6 +117,7 @@ public class EventController implements Serializable {
         }
         //FacesContext.getCurrentInstance().addMessage(null, message);
         renderCoordinates();
+ 
 
     }
 
@@ -277,7 +280,7 @@ public class EventController implements Serializable {
     }
 
     public String getCoordenadasOrigen() {
-
+        coordenadasOrigen = "41.9792243,-6.0599661";
         if (!listaEventos.isEmpty()) {
             coordenadasOrigen = getMediaCoordinates(listaEventos);
         } else {
@@ -332,6 +335,7 @@ public class EventController implements Serializable {
     }
 
     public List<Event> getListaEventos() {
+
         return listaEventos;
     }
 
