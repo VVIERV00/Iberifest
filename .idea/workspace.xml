@@ -6,6 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="07c0db7b-f825-4d02-9145-b6373dd14ee4" name="Default Changelist" comment="Un pequeño ajuste en la vista">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f508f9e-b8cc-45bd-92dd-22a3271c4c61.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1f508f9e-b8cc-45bd-92dd-22a3271c4c61.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -21,6 +22,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/webapp/public/index.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/public/index.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/public/register.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/public/register.xhtml" afterDir="false" />
     </list>
+=======
+    <list default="true" id="07c0db7b-f825-4d02-9145-b6373dd14ee4" name="Default Changelist" comment="" />
+>>>>>>> Stashed changes
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -388,6 +392,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+<<<<<<< Updated upstream
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/iberifest/controlador/IndexController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -416,11 +421,19 @@
                 <element signature="e#2194#2195#0" expanded="true" />
                 <element signature="e#2237#2238#0" expanded="true" />
               </folding>
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/iberifest/controlador/IndexController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="628">
+              <caret line="62" column="48" lean-forward="true" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/src/main/java/com/iberifest/controlador/EventCreationController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
@@ -458,6 +471,12 @@
                 <element signature="e#5279#5280#0" expanded="true" />
                 <element signature="e#5311#5312#0" expanded="true" />
               </folding>
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/iberifest/util/SessionUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -465,7 +484,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/iberifest/modelo/Event.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="189">
+=======
+            <state relative-caret-position="1722">
+>>>>>>> Stashed changes
               <caret line="122" column="16" selection-start-line="122" selection-start-column="16" selection-end-line="122" selection-end-column="16" />
               <folding>
                 <element signature="e#2527#2528#0" expanded="true" />
@@ -475,12 +498,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/private/eventCreation.xhtml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="171">
               <caret line="145" column="41" selection-start-line="145" selection-start-column="41" selection-end-line="145" selection-end-column="41" />
             </state>
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/private/eventCreation.xhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-151" />
+>>>>>>> Stashed changes
           </provider>
         </entry>
       </file>
@@ -496,8 +526,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="336">
               <caret line="16" column="21" lean-forward="true" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+=======
+            <state relative-caret-position="252">
+              <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -505,8 +540,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.xhtml">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="501">
               <caret line="33" column="13" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="33" selection-end-column="13" />
+=======
+            <state relative-caret-position="504">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -667,7 +707,45 @@
       <select />
     </treeState>
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectFrameBounds" extendedState="6">
+=======
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/Iberifest.iml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/.idea/compiler.xml" />
+        <option value="$PROJECT_DIR$/.idea/artifacts/Iberifest_war.xml" />
+        <option value="$PROJECT_DIR$/.idea/artifacts/Iberifest_war_exploded.xml" />
+        <option value="$PROJECT_DIR$/.idea/encodings.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_commonj_sdo_2_1_1.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_eclipselink_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_javax_persistence_2_1_0.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_org_eclipse_persistence_antlr_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_org_eclipse_persistence_asm_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_org_eclipse_persistence_core_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_org_eclipse_persistence_jpa_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_org_eclipse_persistence_jpa_jpql_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_persistence_org_eclipse_persistence_jpa_modelgen_processor_2_5_2.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_primefaces_primefaces_7_0.xml" />
+        <option value="$PROJECT_DIR$/.idea/dataSources.xml" />
+        <option value="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_5.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_12.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__me_atlis_atlis_location_base_1_0_0.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__me_atlis_nominatim_api_1_0_0.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_9.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/Maven__org_json_json_20180813.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+>>>>>>> Stashed changes
     <option name="y" value="86" />
     <option name="width" value="940" />
     <option name="height" value="783" />
@@ -677,6 +755,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< Updated upstream
+=======
+      <pane id="PackagesPane" />
+>>>>>>> Stashed changes
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -823,7 +905,10 @@
         </subPane>
       </pane>
       <pane id="CatdeaLogs" />
+<<<<<<< Updated upstream
       <pane id="PackagesPane" />
+=======
+>>>>>>> Stashed changes
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -867,6 +952,7 @@
     </option>
   </component>
   <component name="RunManager" selected="GlassFish Server.GlassFish 4.1.0">
+<<<<<<< Updated upstream
     <configuration name="GlassFish 4.1.0" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 4.1.0" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/IberiFest-1.0-SNAPSHOT/Iberifest/public/index.xhtml" />
       <option name="UPDATING_POLICY" value="redeploy-artifacts" />
@@ -1062,6 +1148,8 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+=======
+>>>>>>> Stashed changes
     <list>
       <item itemvalue="GlassFish Server.GlassFish 4.1.0" />
       <item itemvalue="Maven.IberiFest []" />
@@ -1133,7 +1221,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="123229000" />
+=======
+    <option name="totallyTimeSpent" value="93550000" />
+>>>>>>> Stashed changes
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1155,7 +1247,11 @@
       <window_info id="Capture Tool" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" sideWeight="0.16842106" side_tool="true" weight="0.23105656" />
+<<<<<<< Updated upstream
       <window_info content_ui="combo" id="Project" order="7" sideWeight="0.83157897" visible="true" weight="0.1547492" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="7" sideWeight="0.83157897" visible="true" weight="0.1547492" />
+>>>>>>> Stashed changes
       <window_info id="Learn" order="8" weight="0.32977587" />
       <window_info id="Web" order="9" sideWeight="0.16842106" side_tool="true" weight="0.23105656" />
       <window_info anchor="bottom" id="Application Servers" order="0" sideWeight="0.766809" weight="0.32896176" />
@@ -1193,6 +1289,7 @@
     <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+<<<<<<< Updated upstream
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -1213,6 +1310,18 @@
                 </list>
               </option>
             </State>
+=======
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+>>>>>>> Stashed changes
           </value>
         </entry>
       </map>
@@ -1371,8 +1480,13 @@
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JSF/lib/jsf-support.jar!/resources/schemas/ee8/taglib/ui.taglib.xml">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="189">
           <caret line="579" column="4" selection-start-line="579" selection-start-column="4" selection-end-line="579" selection-end-column="4" />
+=======
+        <state relative-caret-position="210">
+          <caret line="10" column="8" selection-start-line="9" selection-start-column="69" selection-end-line="10" selection-end-column="8" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -1560,6 +1674,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/iberifest/controlador/IndexController.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="235">
           <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
         </state>
@@ -1671,6 +1786,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="145" column="41" selection-start-line="145" selection-start-column="41" selection-end-line="145" selection-end-column="41" />
+=======
+        <state relative-caret-position="628">
+          <caret line="62" column="48" lean-forward="true" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
