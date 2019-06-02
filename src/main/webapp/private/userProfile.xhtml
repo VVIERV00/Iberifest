@@ -13,6 +13,8 @@
 
     <h:body>
 
+        <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
+        <ui:define name="content">
         <p:panelGrid columns="3">
             <p:panel id="detallesUsuario" header="Perfil de usuario"  style="margin-bottom:20px">
 
@@ -54,7 +56,8 @@
                 </p:panelGrid>
             </p:panel>
         </p:panelGrid>
-
+        </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

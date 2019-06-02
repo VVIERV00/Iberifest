@@ -7,40 +7,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
-    
-        <script type="text/javascript">
-            PrimeFaces.locales['es'] = {
-                closeText: 'Cerrar',
-                prevText: 'Anterior',
-                nextText: 'Siguiente',
-                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-                weekHeader: 'Semana',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: '',
-                timeOnlyTitle: 'Sólo hora',
-                timeText: 'Tiempo',
-                hourText: 'Hora',
-                minuteText: 'Minuto',
-                secondText: 'Segundo',
-                currentText: 'Fecha actual',
-                ampm: false,
-                month: 'Mes',
-                week: 'Semana',
-                day: 'Día',
-                allDayText: 'Todo el día'
-            };
 
-            console.log("CARGA");
-            /*jQuery("#j_idt5\\:inputDistancia").click(function () {
-             var value = jQuery(this).val();
-             console.log("HOLA" + value);
-             });*/
+        <script type="text/javascript">
 
             jQuery(document).ready(function () {
                 jQuery('#j_idt7\\:inputDistancia_input').hide();
@@ -55,15 +23,12 @@
                     }
                 });
             });
-          
-
-
-
-
         </script>
     </h:head>
     <h:body>
+        <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
 
+        <ui:define name="content">
 
         <h:form>
             <h3>Filtrado de eventos</h3>
@@ -112,7 +77,8 @@
             </p:panelGrid>
 
         </h:form>
-
+        </ui:define>
+        </ui:composition>
 
     </h:body>
 </html>

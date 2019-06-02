@@ -15,6 +15,11 @@
 
     </h:head>
     <h:body id="principal">
+
+        <ui:composition template="/WEB-INF/templates/infamousPage.xhtml">
+
+        <ui:define name="content">
+
         <h:inputHidden value="#{eventViewController.idEvento}" id="hiddenId" />
         <h:form>
 
@@ -93,9 +98,10 @@
                 <p:commandButton value="Denunciar Evento" id="denunciaEvento" oncomplete="PF('dlg2').hide();" action="#{eventViewController.denunciar(eventViewController.evento, eventViewController.comentarioDenuncia)}" style="margin-right:20px;"/>
             </h:form>
 
-        </p:dialog>   
+        </p:dialog>
 
-
+        </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
