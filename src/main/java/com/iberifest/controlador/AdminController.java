@@ -49,7 +49,7 @@ public class AdminController implements Serializable {
 
     @EJB
     private DenunciaFacadeLocal denunciaEJB;
-    
+
     @EJB
     private EventFacadeLocal eventoEJB;
 
@@ -96,7 +96,7 @@ public class AdminController implements Serializable {
         printOnXhtml = "";
         user = new User();
         userRole = new User_role();
-        allRoles = roleEJB.findAll();
+        
         listaUsuarios = new ArrayList<>();
         rolesPorUsuario = new HashMap<Integer, List<User_role>>();
         listaUserRoles = new ArrayList<>();
@@ -146,28 +146,13 @@ public class AdminController implements Serializable {
 
         listaUserRoles = userRoleEJB.findByUserId(u);
 
-        //Habria que meter un map para saber que selectRoles es de cada usuario.
-        /*for (int i = 0; i < listaUserRoles.size(); i++) {
-
-         // System.out.println(listaUserRoles.get(i).getRole().getName());
-
-            
-         for(int j = 0; j < listaUsuarios.size(); j++)
-         {
-         selectedRolesSet.add(listaUserRoles.get(i).getRole().getName());
-         selectedRolesSetNew.add(listaUserRoles.get(i).getRole().getName());
-         mapUserRoles.put(listaUsuarios.get(j), selectedRolesSet);
-         mapUserRolesNew.put(listaUsuarios.get(j), selectedRolesSetNew);            
-                
-         }
-         }*/
-        //llamar metodo
+   
         return listaUserRoles;
 
     }
 
     public HashMap<User, String[]> auxChange(User u) {
-
+        getAllRoles();
         selectedRolesArr = new String[listaUserRoles.size()];
         selectedRolesArrNew = new String[allRoles.size()];
 
@@ -242,9 +227,8 @@ public class AdminController implements Serializable {
         denuncia.setResuelta(true);
         denunciaEJB.edit(denuncia);
     }
-    
-    public void verificarEvento(Event event)
-    {
+
+    public void verificarEvento(Event event) {
         event.setVerificado(true);
         eventoEJB.edit(event);
     }
@@ -274,6 +258,7 @@ public class AdminController implements Serializable {
     }
 
     public Set<String> getSelectedRolesSet() {
+        
         return selectedRolesSet;
     }
 
@@ -282,6 +267,7 @@ public class AdminController implements Serializable {
     }
 
     public List<Role> getAllRoles() {
+        allRoles = roleEJB.findAll();
         return allRoles;
     }
 
@@ -356,6 +342,4 @@ public class AdminController implements Serializable {
         this.eventosSinVerificar = eventosSinVerificar;
     }
 
-    
-    
 }
