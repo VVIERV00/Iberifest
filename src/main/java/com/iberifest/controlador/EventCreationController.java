@@ -41,7 +41,7 @@ public class EventCreationController implements Serializable {
     private String coordenadasEventoTexto;
     private MapModel simpleModel;
     private Marker marker;
-    private static String API_KEY = "AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0";
+    private static String API_KEY = "";
 
     @PostConstruct
     public void init() {
