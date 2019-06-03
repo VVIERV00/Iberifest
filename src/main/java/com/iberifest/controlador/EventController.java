@@ -62,7 +62,7 @@ public class EventController implements Serializable {
     private LatLng coord;
     private HashMap<Integer, MapModel> hashMaps;
 
-    private static String API_KEY = "AIzaSyCT5Gp11FBLtymzALIDbF0AG6Gwvtl27E0";
+    private static String API_KEY = "";
     private double maxDistancia;
     private String coordenadasOrigenTexto;
     private String coordenadasOrigen;
